@@ -1,0 +1,6 @@
+.DS_Store
+*.exe
+*.aux
+*.log
+*.gz
+*.toc
