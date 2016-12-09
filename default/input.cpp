@@ -4,11 +4,4 @@
     while('0'<=ch&&ch<='9')x=x*10-'0'+ch,ch=getchar();
     return f?-x:x;
 }
-inline int read(){//輸入不可以包含 : ; < > = ? 
-    int x=0; bool f=0; char c=getchar();
-    while((c>>4)&3!=3)f|=ch=='-',c=getchar();
-    while((c>>4)&3==3)x=x*10-'0'+c,c=getchar();
-    return f?-x:x;
-}
-
-
+//g++ -std=c++11 -O2 -Wall -Wextra -Wno-unused-variable $1 && ./a.out

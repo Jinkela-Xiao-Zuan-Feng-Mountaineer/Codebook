@@ -7,7 +7,6 @@
 using namespace std;
 ofstream fout;
 ifstream fin;
-std::regex CPPFILE(R"A(.*(\.cpp|formula)$)A");
 
 static std::wstring CPToUTF16(unsigned code_page, const std::string& input)
 {
@@ -72,10 +71,13 @@ void merge(string root,int d=0)
             merge(root+FileName+"\\",d+1);
             continue;
         }
-        else if( FileName.back()=='p'|| FileName=="formula" )
+        else if( FileName.back()=='p' )
         {
             //cout<<setw(d*2)<<""<<"\\includecpp{"<<FileName<<"}{"<<root+FileName<<"}"<<endl;
             fout<<setw(d*2)<<""<<"\\includecpp{"<<toLatex(FileName)<<"}{"<<toLatex(root+FileName,false)<<"}"<<endl;
+        }else if( FileName=="formula.tex" )
+        {
+            fout<<setw(d*2)<<""<<"\\includetex{"<<toLatex(FileName)<<"}{"<<toLatex(root+FileName,false)<<"}"<<endl;
         }
     }while(FindNextFileW(hD,&fd));
 }
