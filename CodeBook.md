@@ -17,14 +17,14 @@
   \includecpp{整體二分.cpp}{./Data_Structure/整體二分.cpp}
 \section{default}
   \includecpp{debug.cpp}{./default/debug.cpp}
+  \includecpp{ext.cpp}{./default/ext.cpp}
   \includecpp{IncStack.cpp}{./default/IncStack.cpp}
   \includecpp{input.cpp}{./default/input.cpp}
 \section{Flow}
   \includecpp{dinic.cpp}{./Flow/dinic.cpp}
-  \includecpp{ISAP.cpp}{./Flow/ISAP.cpp}
+  \includecpp{ISAP\_with\_cut.cpp}{./Flow/ISAP_with_cut.cpp}
   \includecpp{MinCostMaxFlow.cpp}{./Flow/MinCostMaxFlow.cpp}
 \section{Graph}
-  \includecpp{Arborescence\_EV.cpp}{./Graph/Arborescence_EV.cpp}
   \includecpp{Augmenting\_Path.cpp}{./Graph/Augmenting_Path.cpp}
   \includecpp{Augmenting\_Path\_multiple.cpp}{./Graph/Augmenting_Path_multiple.cpp}
   \includecpp{blossom\_matching.cpp}{./Graph/blossom_matching.cpp}
@@ -36,9 +36,13 @@
   \includecpp{Rectilinear\_Steiner\_tree.cpp}{./Graph/Rectilinear_Steiner_tree.cpp}
   \includecpp{treeISO.cpp}{./Graph/treeISO.cpp}
   \includecpp{一般圖最大權匹配.cpp}{./Graph/一般圖最大權匹配.cpp}
+  \includecpp{全局最小割.cpp}{./Graph/全局最小割.cpp}
+  \includecpp{最小樹形圖\_朱劉.cpp}{./Graph/最小樹形圖_朱劉.cpp}
 \section{language}
   \includecpp{CNF.cpp}{./language/CNF.cpp}
   \includecpp{earley.cpp}{./language/earley.cpp}
+\section{Linear\_Programming}
+  \includecpp{最大密度子圖.cpp}{./Linear_Programming/最大密度子圖.cpp}
 \section{Number\_Theory}
   \includecpp{basic.cpp}{./Number_Theory/basic.cpp}
   \includecpp{bit\_set.cpp}{./Number_Theory/bit_set.cpp}
@@ -53,6 +57,7 @@
   \includecpp{Gauss\_Elimination.cpp}{./Number_Theory/Gauss_Elimination.cpp}
   \includecpp{LinearCongruence.cpp}{./Number_Theory/LinearCongruence.cpp}
   \includecpp{Lucas.cpp}{./Number_Theory/Lucas.cpp}
+  \includecpp{Matrix.cpp}{./Number_Theory/Matrix.cpp}
   \includecpp{NTT.cpp}{./Number_Theory/NTT.cpp}
   \includecpp{random.cpp}{./Number_Theory/random.cpp}
   \includecpp{外星模運算.cpp}{./Number_Theory/外星模運算.cpp}

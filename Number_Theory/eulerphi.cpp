@@ -11,13 +11,8 @@ int eulerPhi(int n){
 	return res;
 }
 
-vector<int> phiTable(int n){
-	vector<int>phi(n+1, 0);
-	phi[1] = 1;
-	for(int i=2; i<=n; i++) if(!phi[i])
-		for(int j=i; j<=n; j+=i){
-			if(!phi[j])phi[j] = j;
-			phi[j] = phi[j]*(i-1)/i;
-		}
-	return phi;
+long long int phi[N+1];
+void phiTable(){
+	for(int i=1;i<=N;i++)phi[i]=i;
+	for(int i=1;i<=N;i++)for(x=i*2;x<=N;x+=i)phi[x]-=phi[i];
 }
