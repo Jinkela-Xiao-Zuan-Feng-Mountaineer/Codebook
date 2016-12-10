@@ -1,5 +1,4 @@
 \section{Computational\_Geometry}
-  \includetex{formula.tex}{./Computational_Geometry/formula.tex}
   \includecpp{Geometry.cpp}{./Computational_Geometry/Geometry.cpp}
   \includecpp{SmallestCircle.cpp}{./Computational_Geometry/SmallestCircle.cpp}
   \includecpp{最近點對.cpp}{./Computational_Geometry/最近點對.cpp}
@@ -28,7 +27,6 @@
   \includecpp{Augmenting\_Path.cpp}{./Graph/Augmenting_Path.cpp}
   \includecpp{Augmenting\_Path\_multiple.cpp}{./Graph/Augmenting_Path_multiple.cpp}
   \includecpp{blossom\_matching.cpp}{./Graph/blossom_matching.cpp}
-  \includetex{formula.tex}{./Graph/formula.tex}
   \includecpp{graphISO.cpp}{./Graph/graphISO.cpp}
   \includecpp{KM.cpp}{./Graph/KM.cpp}
   \includecpp{MaximumClique.cpp}{./Graph/MaximumClique.cpp}
@@ -47,21 +45,16 @@
   \includecpp{basic.cpp}{./Number_Theory/basic.cpp}
   \includecpp{bit\_set.cpp}{./Number_Theory/bit_set.cpp}
   \includecpp{cantor\_expansion.cpp}{./Number_Theory/cantor_expansion.cpp}
-  \includecpp{Chinese\_remainder\_theorem.cpp}{./Number_Theory/Chinese_remainder_theorem.cpp}
-  \includecpp{enumerate.cpp}{./Number_Theory/enumerate.cpp}
-  \includecpp{eulerphi.cpp}{./Number_Theory/eulerphi.cpp}
-  \includecpp{Factor.cpp}{./Number_Theory/Factor.cpp}
   \includecpp{FFT.cpp}{./Number_Theory/FFT.cpp}
   \includecpp{find\_real\_root.cpp}{./Number_Theory/find_real_root.cpp}
-  \includetex{formula.tex}{./Number_Theory/formula.tex}
-  \includecpp{Gauss\_Elimination.cpp}{./Number_Theory/Gauss_Elimination.cpp}
   \includecpp{LinearCongruence.cpp}{./Number_Theory/LinearCongruence.cpp}
   \includecpp{Lucas.cpp}{./Number_Theory/Lucas.cpp}
   \includecpp{Matrix.cpp}{./Number_Theory/Matrix.cpp}
+  \includecpp{MillerRobin.cpp}{./Number_Theory/MillerRobin.cpp}
   \includecpp{NTT.cpp}{./Number_Theory/NTT.cpp}
-  \includecpp{random.cpp}{./Number_Theory/random.cpp}
   \includecpp{外星模運算.cpp}{./Number_Theory/外星模運算.cpp}
   \includecpp{模運算模板.cpp}{./Number_Theory/模運算模板.cpp}
+  \includecpp{質因數分解.cpp}{./Number_Theory/質因數分解.cpp}
 \section{String}
   \includecpp{AC自動機.cpp}{./String/AC自動機.cpp}
   \includecpp{hash.cpp}{./String/hash.cpp}
@@ -80,3 +73,5 @@
   \includecpp{LCA.cpp}{./Tree_problem/LCA.cpp}
   \includecpp{link\_cut\_tree.cpp}{./Tree_problem/link_cut_tree.cpp}
   \includecpp{POJ\_tree.cpp}{./Tree_problem/POJ_tree.cpp}
+\section{zformula}
+  \includetex{formula.tex}{./zformula/formula.tex}

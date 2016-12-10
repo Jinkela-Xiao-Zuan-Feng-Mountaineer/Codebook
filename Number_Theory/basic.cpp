@@ -1,10 +1,18 @@
-typedef long long int LL;
 template<typename T>
 void gcd(const T &a,const T &b,T &d,T &x,T &y){
 	if(!b) d=a,x=1,y=0;
 	else gcd(b,a%b,d,y,x), y-=x*(a/b);
 }
-
+long long int phi[N+1];
+void phiTable(){
+	for(int i=1;i<=N;i++)phi[i]=i;
+	for(int i=1;i<=N;i++)for(x=i*2;x<=N;x+=i)phi[x]-=phi[i];
+}
+void all_divdown(const LL &n) {// all n/x
+	for(LL a=1;a<=n;a=n/(n/(a+1))){
+		// dosomething;
+	}
+}
 const int MAXPRIME = 1000000;
 int iscom[MAXPRIME], prime[MAXPRIME], primecnt;
 int phi[MAXPRIME], mu[MAXPRIME];
@@ -51,7 +59,6 @@ LL primitive_root(const LL &p) {
 	puts("primitive_root NOT FOUND");
 	return -1;
 }
-
 int Legendre(const LL &a, const LL &p) { return modexp(a%p,(p-1)/2,p); }
 
 LL inv(const LL &a, const LL &n) {
@@ -99,4 +106,39 @@ LL Tonelli_Shanks(const LL &n, const LL &p) {
 		M = i;
 	}
 	return -1;
+}
+
+template<typename T>
+T Euler(T n){
+	T ans=n;
+	for(T i=2;i*i<=n;++i){
+		if(n%i==0){
+			ans=ans/i*(i-1);
+			while(n%i==0)n/=i;
+		}
+	}
+	if(n>1)ans=ans/n*(n-1);
+	return ans;
+}
+
+//Chinese_remainder_theorem
+template<typename T>
+T pow_mod(T n,T k,T m){
+	T ans=1;
+	for(n=(n>=m?n%m:n);k;k>>=1){
+		if(k&1)ans=ans*n%m;
+		n=n*n%m;
+	}
+	return ans;
+}
+template<typename T>
+T crt(vector<T> &m,vector<T> &a){
+	T M=1,tM,ans=0;
+	for(int i=0;i<(int)m.size();++i)M*=m[i];
+	for(int i=0;i<(int)a.size();++i){
+		tM=M/m[i];
+		ans=(ans+(a[i]*tM%M)*pow_mod(tM,Euler(m[i])-1,m[i])%M)%M;
+		/*如果m[i]是質數，Euler(m[i])-1=m[i]-2，就不用算Euler了*/
+	}
+	return ans;
 }
