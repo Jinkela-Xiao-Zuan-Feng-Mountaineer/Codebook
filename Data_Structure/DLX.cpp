@@ -82,11 +82,11 @@ struct DLX{
 		}
 	}
 	bool exact_cover(){//解精確覆蓋問題 
-		ans.clear();//答案存在ans裡 
+		ans.clear();//答案
 		return dfs(0);
 	}
 	void min_cover(){//解最小重複覆蓋問題 
-		anst.clear();//這只是暫存用，答案還是存在ans裡 
+		anst.clear();//暫存用，答案還是存在ans裡 
 		dfs2(0);
 	}
 	#undef DFOR

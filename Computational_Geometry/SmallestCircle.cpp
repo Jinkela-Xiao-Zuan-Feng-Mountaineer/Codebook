@@ -1,5 +1,4 @@
 #include"Geometry.cpp"
-#include<vector>
 struct Circle{
     typedef point<double> p;
     typedef const point<double> cp;

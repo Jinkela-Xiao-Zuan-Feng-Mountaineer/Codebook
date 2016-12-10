@@ -1,4 +1,4 @@
-template<typename T,size_t kd>//kdªí¥Ü¦³´X­Óºû«× 
+template<typename T,size_t kd>//æœ‰kdå€‹ç¶­åº¦ 
 class kd_tree{
 	public:
 		struct point{
@@ -27,7 +27,7 @@ class kd_tree{
 			void up(){s=(l?l->s:0)+1+(r?r->s:0);}
 		}*root;
 		const double alpha,loga;
-		const T INF;//°O±o­nµ¹INF¡Aªí¥Ü·¥¤j­È 
+		const T INF;//è¨˜å¾—è¦çµ¦INFï¼Œè¡¨ç¤ºæ¥µå¤§å€¼ 
 		int maxn;
 		struct __cmp{
 			int sort_id;
@@ -184,12 +184,12 @@ class kd_tree{
 			nearest(root,0,x,h,mndist);
 			mndist=pQ.top().first;
 			pQ=std::priority_queue<std::pair<T,point > >();
-			return mndist;/*¦^¶ÇÂ÷x²ÄkªñªºÂIªº¶ZÂ÷*/ 
+			return mndist;//å›å‚³é›¢xç¬¬kè¿‘çš„é»çš„è·é›¢ 
 		}
 		const std::vector<point> &range(const point&mi,const point&ma){
 			in_range.clear();
 			range(root,0,mi,ma);
-			return in_range;/*¦^¶Ç¤¶©ómi¨ìma¤§¶¡ªºÂIvector*/ 
+			return in_range;//å›å‚³ä»‹æ–¼miåˆ°maä¹‹é–“çš„é»vector 
 		}
 		int size(){return root?root->s:0;}
 };

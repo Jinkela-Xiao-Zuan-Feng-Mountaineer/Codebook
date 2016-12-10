@@ -3,7 +3,7 @@ vector<int> G[N];// 1-base
 vector<int> bcc[N];//存每塊雙連通分量的點
 int low[N],vis[N],Time;
 int bcc_id[N],bcc_cnt;// 1-base
-bool is_cut[N];//是否為割點，割點的bcc_id沒意義
+bool is_cut[N];//是否為割點
 int st[N],top;
 void dfs(int u,int pa=-1){//u當前點，pa父親 
 	int v,child=0;

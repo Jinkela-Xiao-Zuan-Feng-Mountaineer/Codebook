@@ -14,13 +14,13 @@ int match[MAXN*2+1],slack[MAXN*2+1],st[MAXN*2+1],pa[MAXN*2+1];
 int flower_from[MAXN*2+1][MAXN+1],S[MAXN*2+1],vis[MAXN*2+1];
 vector<int> flower[MAXN*2+1];
 queue<int> q;
-inline int e_delta(const edge &e){ // does not work inside blossoms
+int e_delta(const edge &e){ // does not work inside blossoms
 	return lab[e.u]+lab[e.v]-g[e.u][e.v].w*2;
 }
-inline void update_slack(int u,int x){
+void update_slack(int u,int x){
 	if(!slack[x]||e_delta(g[u][x])<e_delta(g[slack[x]][x]))slack[x]=u;
 }
-inline void set_slack(int x){
+void set_slack(int x){
 	slack[x]=0;
 	for(int u=1;u<=n;++u)
 		if(g[u][x].w>0&&st[u]!=x&&S[st[u]]==0)update_slack(u,x);
@@ -29,19 +29,19 @@ void q_push(int x){
 	if(x<=n)q.push(x);
 	else for(size_t i=0;i<flower[x].size();i++)q_push(flower[x][i]);
 }
-inline void set_st(int x,int b){
+void set_st(int x,int b){
 	st[x]=b;
 	if(x>n)for(size_t i=0;i<flower[x].size();++i)
 			set_st(flower[x][i],b);
 }
-inline int get_pr(int b,int xr){
+int get_pr(int b,int xr){
 	int pr=find(flower[b].begin(),flower[b].end(),xr)-flower[b].begin();
-	if(pr%2==1){//檢查他在前一層圖是奇點還是偶點
+	if(pr%2==1){//檢查他在前一層是奇點還是偶點
 		reverse(flower[b].begin()+1,flower[b].end());
 		return (int)flower[b].size()-pr;
 	}else return pr;
 }
-inline void set_match(int u,int v){
+void set_match(int u,int v){
 	match[u]=g[u][v].v;
 	if(u>n){
 		edge e=g[u][v];
@@ -51,7 +51,7 @@ inline void set_match(int u,int v){
 		rotate(flower[u].begin(),flower[u].begin()+pr,flower[u].end());
 	}
 }
-inline void augment(int u,int v){
+void augment(int u,int v){
 	for(;;){
 		int xnv=st[match[u]];
 		set_match(u,v);
@@ -60,7 +60,7 @@ inline void augment(int u,int v){
 		u=st[pa[xnv]],v=xnv;
 	}
 }
-inline int get_lca(int u,int v){
+int get_lca(int u,int v){
 	static int t=0;
 	for(++t;u||v;swap(u,v)){
 		if(u==0)continue;
@@ -71,7 +71,7 @@ inline int get_lca(int u,int v){
 	}
 	return 0;
 }
-inline void add_blossom(int u,int lca,int v){
+void add_blossom(int u,int lca,int v){
 	int b=n+1;
 	while(b<=n_x&&st[b])++b;
 	if(b>n_x)++n_x;
@@ -97,7 +97,7 @@ inline void add_blossom(int u,int lca,int v){
 	}
 	set_slack(b);
 }
-inline void expand_blossom(int b){ // S[b] == 1
+void expand_blossom(int b){ // S[b] == 1
 	for(size_t i=0;i<flower[b].size();++i)
 		set_st(flower[b][i],flower[b][i]);
 	int xr=flower_from[b][g[b][pa[b]].u],pr=get_pr(b,xr);
@@ -115,7 +115,7 @@ inline void expand_blossom(int b){ // S[b] == 1
 	}
 	st[b]=0;
 }
-inline bool on_found_edge(const edge &e){
+bool on_found_edge(const edge &e){
 	int u=st[e.u],v=st[e.v];
 	if(S[v]==-1){
 		pa[v]=e.u,S[v]=1;
@@ -131,7 +131,7 @@ inline bool on_found_edge(const edge &e){
 	}
 	return false;
 }
-inline bool matching(){
+bool matching(){
 	memset(S+1,-1,sizeof(int)*n_x);
 	memset(slack+1,0,sizeof(int)*n_x);
 	q=queue<int>();
@@ -177,7 +177,7 @@ inline bool matching(){
 	}
 	return false;
 }
-inline pair<long long,int> weight_blossom(){
+pair<long long,int> weight_blossom(){
 	memset(match+1,0,sizeof(int)*n);
 	n_x=n;
 	int n_matches=0;
@@ -196,7 +196,7 @@ inline pair<long long,int> weight_blossom(){
 			tot_weight+=g[u][match[u]].w;
 	return make_pair(tot_weight,n_matches);
 }
-inline void init_weight_graph(){
+void init_weight_graph(){
 	for(int u=1;u<=n;++u)
 		for(int v=1;v<=n;++v)
 			g[u][v]=edge(u,v,0);
@@ -213,4 +213,10 @@ int main(){
 	printf("%lld\n",weight_blossom().first);
 	for(int u=1;u<=n;++u)printf("%d ",match[u]);puts("");
 	return 0;
-}
+}/*7 20
+5 7 9 3 7 4 3 6 6 2 5 8 5 1 9 1 3 6 6 5 1
+2 7 4 2 3 5 6 4 2 7 1 5 5 4 4 4 1 3 5 3 9
+7 6 4 2 1 3 4 3 9 6 2 7 4 2 8 6 1 10
+-----------------------------------------
+28
+6 0 4 3 7 1 5*/

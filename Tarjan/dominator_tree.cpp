@@ -1,11 +1,11 @@
 struct dominator_tree{
 	static const int MAXN=5005;
 	int n;// 1-base
-	vector<int> suc[MAXN],pre[MAXN];//存圖和反向圖 
-	int fa[MAXN],dfn[MAXN],id[MAXN],Time;//for dfs
+	vector<int> suc[MAXN],pre[MAXN];
+	int fa[MAXN],dfn[MAXN],id[MAXN],Time;
 	int semi[MAXN],idom[MAXN];
 	int anc[MAXN],best[MAXN];//disjoint set 
-	vector<int> dom[MAXN];//dominator_tree存這裡 
+	vector<int> dom[MAXN];//dominator_tree
 	void init(int _n){
 		n=_n;
 		for(int i=1;i<=n;++i)suc[i].clear(),pre[i].clear();

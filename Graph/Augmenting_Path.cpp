@@ -1,9 +1,9 @@
 #define MAXN1 505
 #define MAXN2 505
-int n1,n2;/*n1個點連向n2個點*/ 
-int match[MAXN2];/*每個屬於n2的點匹配了哪個點*/
-vector<int > g[MAXN1];/*圖*/
-bool vis[MAXN2];/*是否走訪過*/ 
+int n1,n2;//n1個點連向n2個點
+int match[MAXN2];//屬於n2的點匹配了哪個點
+vector<int > g[MAXN1];//圖
+bool vis[MAXN2];//是否走訪過
 bool dfs(int u){
 	for(size_t i=0;i<g[u].size();++i){
 		int v=g[u][i];

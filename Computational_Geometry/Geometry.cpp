@@ -3,26 +3,26 @@ struct point{
 	T x,y;
 	point(){}
 	point(const T&x,const T&y):x(x),y(y){}
-	point operator+(const point &b)const{return point(x+b.x,y+b.y);}
-	point operator-(const point &b)const{return point(x-b.x,y-b.y);}
-	point operator*(const T &b)const{return point(x*b,y*b);}
-	point operator/(const T &b)const{return point(x/b,y/b);}
+	point operator+(const point &b)const{
+		return point(x+b.x,y+b.y);}
+	point operator-(const point &b)const{
+		return point(x-b.x,y-b.y);}
+	point operator*(const T &b)const{
+		return point(x*b,y*b);}
+	point operator/(const T &b)const{
+		return point(x/b,y/b);}
 	bool operator==(const point &b)const{
-		return x==b.x&&y==b.y;
-	}
+		return x==b.x&&y==b.y;}
 	T dot(const point &b)const{
-		return x*b.x+y*b.y;
-	}
+		return x*b.x+y*b.y;}
 	T cross(const point &b)const{
-		return x*b.y-y*b.x;
-	}
-	point normal()const{/*求法向量*/
-		return point(-y,x);
-	}
-	T abs2()const{/*向量長度的平方*/
+		return x*b.y-y*b.x;}
+	point normal()const{//求法向量
+		return point(-y,x);}
+	T abs2()const{//向量長度的平方
 		return dot(*this);
 	}
-	T rad(const point &b)const{/*兩向量的弧度(夾角)*/
+	T rad(const point &b)const{//兩向量的弧度
 		return fabs(atan2(fabs(cross(b)),dot(b)));
 	}
 };
@@ -30,20 +30,20 @@ template<typename T>
 struct line{
 	line(){}
 	point<T> p1,p2;
-	T a,b,c;/*ax+by+c=0*/
+	T a,b,c;//ax+by+c=0
 	line(const point<T>&x,const point<T>&y):p1(x),p2(y){}
-	void pton(){/*轉成一般式*/ 
+	void pton(){//轉成一般式
 		a=p1.y-p2.y;
 		b=p2.x-p1.x;
 		c=-a*p1.x-b*p1.y;
 	}
-	T cross(const point<T> &p)const{/*點和有向直線的關係，>0左邊、=0在線上<0右邊*/
+	T cross(const point<T> &p)const{//點和有向直線的關係，>0左邊、=0在線上<0右邊
 		return (p2-p1).cross(p-p1);
 	}
-	bool point_on_segment(const point<T>&p)const{/*點是否線段上*/ 
+	bool point_on_segment(const point<T>&p)const{//點是否線段上
 		return cross(p)==0&&(p1-p).dot(p2-p)<=0; 
 	}
-	T dis2(const point<T> &p,bool is_segment=0)const{/*點跟直線/線段的距離平方*/ 
+	T dis2(const point<T> &p,bool is_segment=0)const{//點跟直線/線段的距離平方
 		point<T> v=p2-p1,v1=p-p1;
 		if(is_segment){
 			point<T> v2=p-p2;
@@ -57,27 +57,27 @@ struct line{
 		point<T> n=(p2-p1).normal();
 		return p-n*(p-p1).dot(n)/n.abs2();
 	}
-	point<T> mirror(const point<T> &p)const{/*點對直線的鏡射*/ 
-		/*要先呼叫pton轉成一般式*/
+	point<T> mirror(const point<T> &p)const{//點對直線的鏡射
+		//要先呼叫pton轉成一般式
 		point<T> ans;
 		T d=a*a+b*b;
 		ans.x=(b*b*p.x-a*a*p.x-2*a*b*p.y-2*a*c)/d;
 		ans.y=(a*a*p.y-b*b*p.y-2*a*b*p.x-2*b*c)/d;
 		return ans;
 	}
-	bool equal(const line &l)const{/*直線相等*/ 
+	bool equal(const line &l)const{//直線相等
 		return cross(l.p1)==0&&cross(l.p2)==0;
 	}
-	bool parallel(const line &l)const{/*直線平行*/ 
+	bool parallel(const line &l)const{//直線平行
 		return (p1-p2).cross(l.p1-l.p2)==0;
 	}
-	bool cross_seg(const line &l)const{/*直線是否交線段*/
+	bool cross_seg(const line &l)const{//直線是否交線段
 		return (p2-p1).cross(l.p1)*(p2-p1).cross(l.p2)<=0;
 	}
-	char line_intersect(const line &l)const{/*直線相交情況，-1無限多點、1交於一點、0不相交*/ 
+	char line_intersect(const line &l)const{//直線相交情況，-1無限多點、1交於一點、0不相交
 		return parallel(l)?(cross(l.p1)==0?-1:0):1;
 	}
-	char seg_intersect(const line &l)const{/*線段相交情況，-1無限多點、1交於一點、0不相交*/ 
+	char seg_intersect(const line &l)const{//線段相交情況，-1無限多點、1交於一點、0不相交
 		T c1=(p2-p1).cross(l.p1-p1);
 		T c2=(p2-p1).cross(l.p2-p1);
 		T c3=(l.p2-l.p1).cross(p1-l.p1);
@@ -96,7 +96,7 @@ struct line{
 		//if(a.cross(b)==0)return INF;
 		return p1+a*s.cross(b)/a.cross(b);
 	}
-	point<T> seg_intersection(const line &l)const{/*線段交點*/ 
+	point<T> seg_intersection(const line &l)const{//線段交點
 		T c1=(p2-p1).cross(l.p1-p1);
 		T c2=(p2-p1).cross(l.p2-p1);
 		T c3=(l.p2-l.p1).cross(p1-l.p1);
@@ -114,13 +114,13 @@ template<typename T>
 struct polygon{
 	polygon(){}
 	vector<point<T> > p;//逆時針順序 
-	T area()const{/*多邊形面積*/ 
+	T area()const{//面積
 		T ans=0;
 		for(int i=p.size()-1,j=0;j<(int)p.size();i=j++)
 			ans+=p[i].cross(p[j]);
 		return ans/2;
 	}
-	point<T> center_of_mass()const{/*多邊形重心*/
+	point<T> center_of_mass()const{//重心
 		T cx=0,cy=0,w=0;
 		for(int i=p.size()-1,j=0;j<(int)p.size();i=j++){
 			T a=p[i].cross(p[j]);
@@ -130,7 +130,7 @@ struct polygon{
 		}
 		return point<T>(cx/3/w,cy/3/w);
 	}
-	char ahas(const point<T>& t)const{/*點是否在簡單多邊形內，是的話回傳1、在邊上回傳-1、否則回傳0*/ 
+	char ahas(const point<T>& t)const{//點是否在簡單多邊形內，是的話回傳1、在邊上回傳-1、否則回傳0 
 		bool c=0;
 		for(int i=0,j=p.size()-1;i<p.size();j=i++)
 			if(line<T>(p[i],p[j]).point_on_segment(t))return -1;
@@ -141,7 +141,7 @@ struct polygon{
 	}
 	char point_in_convex(const point<T>&x)const{
 		int l=1,r=(int)p.size()-2;
-		while(l<=r){/*點是否在凸多邊形內，是的話回傳1、在邊上回傳-1、否則回傳0*/
+		while(l<=r){//點是否在凸多邊形內，是的話回傳1、在邊上回傳-1、否則回傳0
 			int mid=(l+r)/2;
 			T a1=(p[mid]-p[0]).cross(x-p[0]);
 			T a2=(p[mid+1]-p[0]).cross(x-p[0]);
@@ -153,7 +153,7 @@ struct polygon{
 		}
 		return 0;
 	}
-	polygon cut(const line<T> &l)const{/*凸包對直線切割，得到直線l左側的凸包*/
+	polygon cut(const line<T> &l)const{//凸包對直線切割，得到直線l左側的凸包
 		polygon ans;
 		for(int n=p.size(),i=n-1,j=0;j<n;i=j++){
 			if(l.cross(p[i])>=0){
@@ -166,9 +166,9 @@ struct polygon{
 		return ans;
 	}
 	static bool graham_cmp(const point<T>& a,const point<T>& b){
-		return (a.x<b.x)||(a.x==b.x&&a.y<b.y);/*凸包排序函數*/
+		return (a.x<b.x)||(a.x==b.x&&a.y<b.y);//凸包排序函數
 	}
-	void graham(vector<point<T> > &s){/*凸包*/
+	void graham(vector<point<T> > &s){//凸包
 		sort(s.begin(),s.end(),graham_cmp);
 		p.resize(s.size()+1);
 		int m=0;
@@ -223,10 +223,10 @@ struct triangle{
 		T t=(b-a).cross(c-a)/2;
 		return t>0?t:-t;
 	}
-	point<T> barycenter()const{/*重心*/
+	point<T> barycenter()const{//重心
 		return (a+b+c)/3;
 	}
-	point<T> circumcenter()const{/*外心*/
+	point<T> circumcenter()const{//外心
 		static line<T> u,v;
 		u.p1=(a+b)/2; 
 		u.p2=point<T>(u.p1.x-a.y+b.y,u.p1.y+a.x-b.x);
@@ -234,11 +234,11 @@ struct triangle{
 		v.p2=point<T>(v.p1.x-a.y+c.y,v.p1.y+a.x-c.x);
 		return u.line_intersection(v);
 	}
-	point<T> incenter()const{/*內心，用到根號*/
+	point<T> incenter()const{//內心
 		T A=sqrt((b-c).abs2()),B=sqrt((a-c).abs2()),C=sqrt((a-b).abs2());
 		return point<T>(A*a.x+B*b.x+C*c.x,A*a.y+B*b.y+C*c.y)/(A+B+C);
 	}
-	point<T> perpencenter()const{/*垂心*/
+	point<T> perpencenter()const{//垂心
 		return barycenter()*3-circumcenter()*2;
 	}
 };
@@ -248,39 +248,30 @@ struct point3D{
 	point3D(){}
 	point3D(const T&x,const T&y,const T&z):x(x),y(y),z(z){}
 	point3D operator+(const point3D &b)const{
-		return point3D(x+b.x,y+b.y,z+b.z);
-	}
+		return point3D(x+b.x,y+b.y,z+b.z);}
 	point3D operator-(const point3D &b)const{
-		return point3D(x-b.x,y-b.y,z-b.z);
-	}
+		return point3D(x-b.x,y-b.y,z-b.z);}
 	point3D operator*(const T &b)const{
-		return point3D(x*b,y*b,z*b);
-	}
+		return point3D(x*b,y*b,z*b);}
 	point3D operator/(const T &b)const{
-		return point3D(x/b,y/b,z/b);
-	}
+		return point3D(x/b,y/b,z/b);}
 	bool operator==(const point3D &b)const{
-		return x==b.x&&y==b.y&&z==b.z;
-	}
+		return x==b.x&&y==b.y&&z==b.z;}
 	T dot(const point3D &b)const{
-		return x*b.x+y*b.y+z*b.z;
-	}
+		return x*b.x+y*b.y+z*b.z;}
 	point3D cross(const point3D &b)const{
-		return point3D(y*b.z-z*b.y,z*b.x-x*b.z,x*b.y-y*b.x);
-	}
-	T abs2()const{/*向量長度的平方*/
-		return dot(*this);
-	}
+		return point3D(y*b.z-z*b.y,z*b.x-x*b.z,x*b.y-y*b.x);}
+	T abs2()const{//向量長度的平方
+		return dot(*this);}
 	T area2(const point3D &b)const{//和b、原點圍成面積的平方 
-		return cross(b).abs2()/4;
-	}
+		return cross(b).abs2()/4;}
 };
 template<typename T>
 struct line3D{
 	point3D<T> p1,p2;
 	line3D(){}
 	line3D(const point3D<T> &p1,const point3D<T> &p2):p1(p1),p2(p2){}
-	T dis2(const point3D<T> &p,bool is_segment=0)const{/*點跟直線/線段的距離平方*/ 
+	T dis2(const point3D<T> &p,bool is_segment=0)const{//點跟直線/線段的距離平方
 		point3D<T> v=p2-p1,v1=p-p1;
 		if(is_segment){
 			point3D<T> v2=p-p2;
@@ -296,9 +287,9 @@ struct line3D{
 		//if(N.abs2()==0)return NULL;平行或重合
 		T tmp=N.dot(ab),ans=tmp*tmp/N.abs2();//最近點對距離
 		point3D<T> d1=p2-p1,d2=l.p2-l.p1,D=d1.cross(d2);
-		T t1=((l.p1-p1).cross(d2)).dot(D)/D.abs2();  
-    	T t2=((l.p1-p1).cross(d1)).dot(D)/D.abs2();
-    	return make_pair(p1+d1*t1,l.p1+d2*t2);
+		T t1=((l.p1-p1).cross(d2)).dot(D)/D.abs2();
+		T t2=((l.p1-p1).cross(d1)).dot(D)/D.abs2();
+		return make_pair(p1+d1*t1,l.p1+d2*t2);
 	}
 	bool same_side(const point3D<T> &a,const point3D<T> &b)const{
 		return (p2-p1).cross(a-p1).dot((p2-p1).cross(b-p1))>0;
@@ -370,7 +361,7 @@ struct convexhull3D{
 		return tetrahedron<T>(pt[a],pt[b],pt[c],pt[p]).volume6()<0;
 	}
 	bool outside(int p,int f)const{return outside(p,fc[f].a,fc[f].b,fc[f].c);}
-	void add_face(int a,int b,int c,int p){
+	void AddFace(int a,int b,int c,int p){
 		if(outside(p,a,b,c))fid[c][b]=fid[b][a]=fid[a][c]=fc.size(),fc.push_back(face(c,b,a));
 		else fid[a][b]=fid[b][c]=fid[c][a]=fc.size(),fc.push_back(face(a,b,c));
 	}
@@ -379,9 +370,9 @@ struct convexhull3D{
 		if(outside(p,f)){
 			int a=fc[f].a,b=fc[f].b,c=fc[f].c;
 			fc[f].use=false;
-			if(!dfs(p,fid[b][a]))add_face(p,a,b,c);
-			if(!dfs(p,fid[c][b]))add_face(p,b,c,a);
-			if(!dfs(p,fid[a][c]))add_face(p,c,a,b);
+			if(!dfs(p,fid[b][a]))AddFace(p,a,b,c);
+			if(!dfs(p,fid[c][b]))AddFace(p,b,c,a);
+			if(!dfs(p,fid[a][c]))AddFace(p,c,a,b);
 			return true;
 		}else return false;
 	}
@@ -407,7 +398,7 @@ struct convexhull3D{
 			}
 		}
 		if(!ok)return;
-		for(int i=0;i<4;++i)add_face(i,(i+1)%4,(i+2)%4,(i+3)%4);
+		for(int i=0;i<4;++i)AddFace(i,(i+1)%4,(i+2)%4,(i+3)%4);
 		for(size_t i=4;i<pt.size();++i){
 			for(int j=fc.size()-1;j>=0;--j){
 				if(outside(i,j)){

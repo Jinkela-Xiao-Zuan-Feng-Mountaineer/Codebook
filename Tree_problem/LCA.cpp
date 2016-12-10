@@ -13,7 +13,7 @@ void dfs(int x,int p){//dfs(1,-1);
 	}
 }
 inline int jump(int x,int d){
-	for(int i=0;i<d;++i)if((x>>i)&1)x=pa[k][x];
+for(int i=0;i<d;++i)if((x>>i)&1)x=pa[k][x];
 	return x;
 }
 inline int find_lca(int a,int b){
