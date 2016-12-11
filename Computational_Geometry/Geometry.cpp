@@ -1,3 +1,4 @@
+const double PI=atan2(0.0,-1.0);
 template<typename T>
 struct point{
 	T x,y;
@@ -24,6 +25,11 @@ struct point{
 	}
 	T rad(const point &b)const{//兩向量的弧度
 		return fabs(atan2(fabs(cross(b)),dot(b)));
+	}
+	T getA()const{//對x軸的弧度 
+		T A=atan2(y,x);//超過180度會變負的 
+		if(A<=-PI/2)A+=PI*2;
+		return A;
 	}
 };
 template<typename T>
@@ -53,6 +59,9 @@ struct line{
 		T tmp=v.cross(v1);
 		return tmp*tmp/v.abs2();
 	}
+	T seg_dis2(const line<T> &l)const{//兩線段距離平方 
+		return min({dis2(l.p1,1),dis2(l.p2,1),l.dis2(p1,1),l.dis2(p2,1)});
+	}
 	point<T> projection(const point<T> &p)const{//點對直線的投影
 		point<T> n=(p2-p1).normal();
 		return p-n*(p-p1).dot(n)/n.abs2();
@@ -72,7 +81,7 @@ struct line{
 		return (p1-p2).cross(l.p1-l.p2)==0;
 	}
 	bool cross_seg(const line &l)const{//直線是否交線段
-		return (p2-p1).cross(l.p1)*(p2-p1).cross(l.p2)<=0;
+		return (p2-p1).cross(l.p1-p1)*(p2-p1).cross(l.p2-p1)<=0;
 	}
 	char line_intersect(const line &l)const{//直線相交情況，-1無限多點、1交於一點、0不相交
 		return parallel(l)?(cross(l.p1)==0?-1:0):1;
@@ -153,6 +162,17 @@ struct polygon{
 		}
 		return 0;
 	}
+	vector<T> getA()const{//凸包邊對x軸的夾角
+		vector<T>res;//一定是遞增的 
+		for(size_t i=0;i<p.size();++i)
+			res.push_back((p[(i+1)%p.size()]-p[i]).getA());
+		return res;
+	}
+	bool line_intersect(const vector<T>&A,const line<T> &l)const{//O(logN)
+		int f1=upper_bound(A.begin(),A.end(),(l.p1-l.p2).getA())-A.begin();
+		int f2=upper_bound(A.begin(),A.end(),(l.p2-l.p1).getA())-A.begin();
+		return l.cross_seg(line<T>(p[f1],p[f2]));
+	}
 	polygon cut(const line<T> &l)const{//凸包對直線切割，得到直線l左側的凸包
 		polygon ans;
 		for(int n=p.size(),i=n-1,j=0;j<n;i=j++){
@@ -183,10 +203,62 @@ struct polygon{
 		if(s.size()>1)--m; 
 		p.resize(m);
 	}
-	inline static char sign(const point<T>&t){
+	T diam(){//直徑 
+		int n=p.size(),t=1;
+		T ans=0;p.push_back(p[0]);
+		for(int i=0;i<n;i++){
+			point<T> now=p[i+1]-p[i];
+			while(now.cross(p[t+1]-p[i])>now.cross(p[t]-p[i]))t=(t+1)%n;
+			ans=max(ans,max((p[i]-p[t]).abs2(),(p[i+1]-p[t+1]).abs2()));
+		}
+		return p.pop_back(),ans;
+	}
+	T min_cover_rectangle(){//最小覆蓋矩形 
+		int n=p.size(),t=1,r=1,l;
+		if(n<3)return 0;//也可以做最小周長矩形
+		T ans=1e99;p.push_back(p[0]);
+		for(int i=0;i<n;i++){
+			point<T> now=p[i+1]-p[i];
+			while(now.cross(p[t+1]-p[i])>now.cross(p[t]-p[i]))t=(t+1)%n;
+			while(now.dot(p[r+1]-p[i])>now.dot(p[r]-p[i]))r=(r+1)%n;
+			if(!i)l=r;
+			while(now.dot(p[l+1]-p[i])<=now.dot(p[l]-p[i]))l=(l+1)%n;
+			T d=now.abs2();
+			T tmp=now.cross(p[t]-p[i])*(now.dot(p[r]-p[i])-now.dot(p[l]-p[i]))/d;
+			ans=min(ans,tmp);
+		}
+		return p.pop_back(),ans;
+	}
+	T max_triangle(){//最大內接三角形 
+		int n=p.size(),a=1,b=2;
+		if(n<3)return 0;
+		T ans=0,tmp;p.push_back(p[0]);
+		for(int i=0;i<n;++i){
+			while((p[a]-p[i]).cross(p[b+1]-p[i])>(tmp=(p[a]-p[i]).cross(p[b]-p[i])))b=(b+1)%n;
+			ans=max(ans,tmp);
+			while((p[a+1]-p[i]).cross(p[b]-p[i])>(tmp=(p[a]-p[i]).cross(p[b]-p[i])))a=(a+1)%n;
+			ans=max(ans,tmp);
+		}
+		return p.pop_back(),ans/2;
+	}
+	T dis2(polygon &pl){//凸包最近距離平方
+		vector<point<T> > &P=p,&Q=pl.p;
+		int n=P.size(),m=Q.size(),l=0,r=0;
+		for(int i=0;i<n;++i)if(P[i].y<P[l].y)l=i;
+		for(int i=0;i<m;++i)if(Q[i].y<Q[r].y)r=i;
+		P.push_back(P[0]),Q.push_back(Q[0]);
+		T ans=1e99;
+		for(int i=0;i<n;++i){
+			while((P[l]-P[l+1]).cross(Q[r+1]-Q[r])<0)r=(r+1)%m;
+			ans=min(ans,line<T>(P[l],P[l+1]).seg_dis2(line<T>(Q[r],Q[r+1])));
+			l=(l+1)%n;
+		}
+		return P.pop_back(),Q.pop_back(),ans;
+	}
+	static char sign(const point<T>&t){
 		return (t.y==0?t.x:t.y)<0;
 	}
-	inline static bool angle_cmp(const line<T>& A,const line<T>& B){
+	static bool angle_cmp(const line<T>& A,const line<T>& B){
 		point<T> a=A.p2-A.p1,b=B.p2-B.p1;
 		return sign(a)<sign(b)||(sign(a)==sign(b)&&a.cross(b)>0);
 	}
