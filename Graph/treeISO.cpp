@@ -12,7 +12,7 @@ long long dfs(int u){//hash ver
 	for(auto v:tmp)ret=((ret*X)^v)%P;
 	return ret;
 }
-
+//-----------------------------
 string dfs(int x,int p){
 	vector<string> c;
 	for(int y:g[x])

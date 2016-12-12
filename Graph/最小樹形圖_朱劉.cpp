@@ -21,7 +21,7 @@ struct zhu_liu{
 			for(size_t i=0;i<E.size();++i)
 			if(E[i].u!=E[i].v&&E[i].w<in[E[i].v])
 					pe[E[i].v]=i,in[E[i].v]=E[i].w;
-			for(int u=0;u<n;++u)//µL¸Ñ
+			for(int u=0;u<n;++u)//ç„¡è§£
 				if(u!=root&&in[u]==INF)return -INF;
 			int cntnode=0;
 			memset(id,-1,sizeof(int)*N);
@@ -37,7 +37,7 @@ struct zhu_liu{
 					id[v]=cntnode++;
 				}
 			}
-			if(!cntnode)break;//µLÀô
+			if(!cntnode)break;//ç„¡ç’°
 			for(int u=0;u<n;++u)if(id[u]==-1)id[u]=cntnode++;
 			for(size_t i=0;i<E.size();++i){
 				int v=E[i].v;
