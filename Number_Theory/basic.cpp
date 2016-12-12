@@ -67,6 +67,13 @@ LL inv(const LL &a, const LL &n) {
 	return d==1 ? (x+n)%n : -1;
 }
 
+int inv[maxN];
+LL invtable(int n,LL P){
+	inv[1]=1;
+	for(int i=2;i<n;++i)
+		inv[i]=(P-(P/i))*inv[P%i]%P;
+}
+
 LL log_mod(const LL &a, const LL &b, const LL &p) {
 	// a ^ x = b ( mod p )
 	int m=sqrt(p+.5), e=1;
@@ -141,4 +148,30 @@ T crt(vector<T> &m,vector<T> &a){
 		/*如果m[i]是質數，Euler(m[i])-1=m[i]-2，就不用算Euler了*/
 	}
 	return ans;
+}
+
+//java code
+//求sqrt(N)的連分數
+public static void Pell(int n){
+	BigInteger N,p1,p2,q1,q2,a0,a1,a2,g1,g2,h1,h2,p,q;
+	g1=q2=p1=BigInteger.ZERO;
+	h1=q1=p2=BigInteger.ONE;
+	a0=a1=BigInteger.valueOf((int)Math.sqrt(1.0*n));
+	BigInteger ans=a0.multiply(a0);
+	if(ans.equals(BigInteger.valueOf(n))){
+		System.out.println("No solution!");
+		return ;
+	}
+	while(true){
+		g2=a1.multiply(h1).substract(g1);
+		h2=N.substract(g2.pow(2)).divide(h1);
+		a2=g2.add(a0).divide(h2);
+		p=a1.multiply(p2).add(p1);
+		q=a1.multiply(q2).add(q1);
+		if(p.pow(2).substract(N.multiply(q.pow(2))).compareTo(BigInteger.ONE)==0)break;
+		g1=g2;h1=h2;a1=a2;
+		p1=p2;p2=p;
+		q1=q2;q2=q;
+	}
+	System.out.println(p+" "+q);
 }

@@ -22,7 +22,33 @@
 	\item $I(G)=Cv(G)$
 	\item $M(G)=Ce(G)$
 	\end{enumerate}
+\item 最大權閉合圖：
+	\begin{enumerate}\itemsep = -5pt
+	\item $C(u,V)=\infty ,(u,v)\in E$
+	\item $C(S,v)=W_v ,W_v>0$
+	\item $C(v,T)=-W_v ,W_v<0$
+	\end{enumerate}
+\item 最大密度子圖：
+	\begin{enumerate}\itemsep = -5pt
+	\item $C(u,v)=1 ,(u,v)\in E$
+	\item $C(S,v)=U_v ,v \in V$
+	\item $C(v,T)=U+2g-d_v ,v \in V$
+	\end{enumerate}
 \end{enumerate}
+\begin{lstlisting}[language=C++]
+double l=0,=m,stop=1.0/n/n;
+while(r-l>=stop){
+	double(mid);
+	if((n*m-sol.maxFlow(s,t))/2>eps)l=mid;
+	else r=mid;
+}
+build(l);
+sol.maxFlow(s,t);
+vector<int> ans;
+for(int i=1;i<=n;++i)
+	if(sol.vis[i])ans.push_back(i);
+\end{lstlisting}
+
 
 \subsubsection{學長公式}
 \begin{enumerate}\itemsep = -4pt

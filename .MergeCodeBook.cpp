@@ -83,7 +83,7 @@ void merge(string root,int d=0)
 }
 int main()
 {
-    fout.open("CodeBook.md");
+    fout.open("list.tex");
     merge(".\\");
     
     fout.close();

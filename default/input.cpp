@@ -4,4 +4,5 @@
     while('0'<=ch&&ch<='9')x=x*10-'0'+ch,ch=getchar();
     return f?-x:x;
 }
-//g++ -std=c++11 -O2 -Wall -Wextra -Wno-unused-variable $1 && ./a.out
+//  !/bin/bash
+//  g++ -std=c++11 -O2 -Wall -Wextra -Wno-unused-variable -DDEBUG $1 && ./a.out
