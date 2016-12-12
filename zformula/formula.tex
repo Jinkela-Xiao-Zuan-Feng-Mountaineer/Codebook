@@ -1,31 +1,130 @@
-Pick公式\\
-給定頂點坐標均是整點的簡單多邊形，有：\\
-面積 = 內部格點數 + 邊上格點數 / 2 - 1\\
+%\documentclass[a4paper,10pt,oneside]{article}
+%\usepackage{xeCJK}
+%\setCJKmainfont{微軟正黑體}
+%\begin{document}
 
-連通圖\\
-對於連通圖G\\
-最大獨立點集的大小設為I(G)\\
-最大匹配大小設為M(G)
-最小點覆蓋設為Cv(G)\\
-最小邊覆蓋設為Ce(G)\\
-對於任意連通圖\\
-I(G)+Cv(G)=|V|\\
-M(G)+Ce(G)=|V|\\
+\subsubsection{Pick公式}
+給定頂點坐標均是整點的簡單多邊形，面積=內部格點數+邊上格點數/2-1
 
-對於連通二分圖\\
-I(G)=Cv(G)\\
-M(G)=Ce(G)\\
+\subsubsection{圖論}
+\begin{enumerate}\itemsep = -5pt
+\item $V-E+F=2$
+\item 對於平面圖，$F=E-V+n+1$，n是連通分量
+\item 對於平面圖，$E\leq 3V-6$
+\item 對於連通圖G，最大獨立點集的大小設為I(G)，最大匹配大小設為M(G)，最小點覆蓋設為Cv(G)，最小邊覆蓋設為Ce(G)。
+對於任意連通圖：
+	\begin{enumerate}\itemsep = -5pt
+	\item $I(G)+Cv(G)=|V|$
+	\item $M(G)+Ce(G)=|V|$
+	\end{enumerate}
+\item 對於連通二分圖：
+	\begin{enumerate}\itemsep = -5pt
+	\item $I(G)=Cv(G)$
+	\item $M(G)=Ce(G)$
+	\end{enumerate}
+\end{enumerate}
 
-最大團=補圖的最大獨立集\\
-公式\\
-$\sum_{d|n} phi(n) = n$\\
-$\sum_{d|n} mu(n) = (n==1)$\\
-$g(n) = \sum_{d|n} f(d) => f(n) = \sum_{d|n} mu(d)*g(n/d)$\\
-$Catalan number: (2n)!/n!/n!/(n+1)$\\
-$Harmonic series H_n = ln(n) + gamma + 1/(2n) - 1/(12nn) + 1/(120nnnn)$\\
-$gamma = 0.57721566490153286060651209008240243104215933593992$\\
-$i-th gray code:i^{(i>>1)}$\\
-$SG(A+B)=SG(A)\oplus SG(B)$\\
+\subsubsection{學長公式}
+\begin{enumerate}\itemsep = -4pt
+\item $\sum_{d|n} phi(n) = n$
+\item $g(n) = \sum_{d|n} f(d) => f(n) = \sum_{d|n} mu(d)*g(n/d)$
+\item $Harmonic series H_n = ln(n) + \gamma + 1/(2n) - 1/(12n^2) + 1/(120n^4)$
+\item $ \gamma = 0.57721566490153286060651209008240243104215933593992$
+\item 格雷碼$=n\oplus (n>>1)$
+\item $SG(A+B)=SG(A)\oplus SG(B)$
+\item 選轉矩陣$M(\theta)= \left( \begin{array}{ccc}
+cos\theta & -sin\theta \\ 
+sin\theta &  cos\theta
+\end{array} \right)$
+\end{enumerate}
 
-Count on a tree\\
-1. Rooted tree :$S_{}$\\
+\subsubsection{基本數論}
+\begin{enumerate}\itemsep = -4pt
+	\item $\sum_{d|n} \mu (n)=(n==1)$
+	\item $g(m)=\sum_{d|m}f(d)\Leftrightarrow f(m)=\sum_{d|m}\mu (d)*g(m/d)$
+	\item $\sum_{i=1}^n\sum_{j=1}^m$互質數量$=\sum \mu (d)\left \lfloor \frac{n}{d} \right \rfloor \left \lfloor \frac{m}{d} \right \rfloor$
+	\item $\sum_{i=1}^n\sum_{j=1}^nlcm(i,j)=n\sum_{d|n}d\phi (d)$
+\end{enumerate}
+
+\subsubsection{排組公式}
+\begin{enumerate}\itemsep = -4pt
+\item k卡特蘭$\frac{C_{n}^{kn}}{n(k-1)+1}$，$C_{m}^{n}=\frac{n!}{m!(n-m)!}$
+\item $H(n,m)\cong x_1+x_2\ldots +x_n=k, num=C_{k}^{n+k-1}$
+\item Stirling number of $2^{nd}$,$n$人分$k$組方法數目
+	\begin{enumerate}\itemsep = -2pt
+		\item $S(0,0)=S(n,n)=1$
+		\item $S(n,0)=0$
+		\item $S(n,k)=kS(n-1,k)+S(n-1,k-1)$
+	\end{enumerate}
+\item Bell number,$n$人分任意多組方法數目
+	\begin{enumerate}\itemsep = -2pt
+		\item $B_0=1$
+		\item $B_n=\sum_{i=0}^nS(n,i)$
+		\item $B_{n+1}=\sum_{k=0}^{n} C_k^n B_k$
+		\item $B_{p+n}\equiv B{_n}+B_{n+1} mod p$, p is prime
+		\item $B_{p^m+n}\equiv mB{_n}+B_{n+1} mod p$, p is prime
+		\item From B0:$1,1,2,5,15,52,\\203,877,4140,21147,115975$
+	\end{enumerate}
+\item Derangement,錯排,沒有人在自己位置上
+	\begin{enumerate}\itemsep = -2pt
+		\item $D_n=n!(1-\frac{1}{1!}+\frac{1}{2!}-\frac{1}{3!}\ldots +(-1)^n\frac{1}{n!})$
+		\item $D_n=(n-1)(D_{n-1}+D_{n-2}),D_0=1,D_1=0$
+		\item From D0:$1,0,1,2,9,44,\\265,1854,14833,133496$
+	\end{enumerate}
+\end{enumerate}
+
+\subsubsection{冪次,冪次和}
+\begin{enumerate}\itemsep = -5pt
+	\item $a^b\%P=a^{b\% \varphi (p)+\varphi (p)},b\geq \varphi (p)$
+	\item $1^3+2^3+3^3+\ldots +n^3=\frac{n^4}{4}+\frac{n^3}{2}+\frac{n^2}{4}$
+	\item $1^4+2^4+3^4+\ldots +n^4=\frac{n^5}{5}+\frac{n^4}{2}+\frac{n^3}{3}-\frac{n}{30}$
+	\item $1^5+2^5+3^5+\ldots +n^5=\frac{n^6}{6}+\frac{n^5}{2}+\frac{5n^4}{12}-\frac{n^2}{12}$
+	\item $0^k+1^k+2^k+\ldots +n^k = P(k),P(k)=\frac{(n+1)^{k+1}-\sum_{i=0}^{k-1}C_i^{k+1}P(i)}{k+1},P(0)=n+1$
+	\item $\sum_{k=0}^{m-1}k^n=\frac{1}{n+1}\sum_{k=0}^{n}C_k^{n+1}B_km^{n+1-k}$
+	\item $\sum_{j=0}^{m}C_j^{m+1}B_j=0,B_0=1$
+	\item 除了$B_1=-1/2$，剩下的奇數項都是$0$
+	\item $B_2=1/6,B_4=-1/30,B_6=1/42,B_8=-1/30,B_{10}=5/66,B_{12}=-691/2730,B_{14}=7/6,B_{16}=-3617/510,B_{18}=43867/798,B_{20}=-174611/330,$
+\end{enumerate}
+
+\subsubsection{Burnside's lemma}
+\begin{enumerate}\itemsep = -5pt
+	\item $|X/G| = \frac{1}{|G|}\sum_{g \in G}|X^g|$
+	\item $X^g=t^{c(g)}$
+	\item $G$表示有幾種轉法，$X^g$表示在那種轉法下，有幾種是會保持對稱的，$t$是顏色數，$c(g)$是循環節不動的面數。
+	\item 正立方體塗三顏色，轉0有$3^6$ 個元素不變，轉90有6種，每種有$3^3$不變，180有$3\times 3^4$，120(角)有$8\times 3^2$，180(邊)有$6\times 3^3$，全部$\frac{1}{24}\left(3^6+6\times 3^3 + 3 \times 3^4 + 8 \times 3^2 + 6 \times 3^3 \right) = 57$
+\end{enumerate}
+
+\subsubsection{Count on a tree}
+\begin{enumerate}\itemsep = -5pt
+	\item Rooted tree: $s_{n+1}=\frac{1}{n}\sum_{i=1}^{n}(i\times a_i\times \sum_{j=1}^{\left \lfloor  n/i\right \rfloor} a_{n+1-i\times j})$
+	\item Unrooted tree: 
+	\begin{enumerate}\itemsep = -2pt
+		\item Odd:$a_n-\sum_{i=1}^{n/2}a_ia_{n-i}$
+		\item Even:$Odd+\frac{1}{2}a_{n/2}(a_{n/2}+1)$
+	\end{enumerate}
+	\item Spanning Tree
+	\begin{enumerate}\itemsep = -2pt
+		\item 完全圖$n^n-2$
+		\item 一般圖(Kirchhoff's theorem)$M[i][i]=degree(V_i)$,$M[i][j]=-1$,if have $E(i,j)$,$0$ if no edge. delete any one row and col in $A$, $ans = det(A)$
+	\end{enumerate}
+\end{enumerate}
+
+\subsubsection{積分表}
+\begin{enumerate}\itemsep = -5pt
+	\item $\int \frac{1}{x}\, \mathrm{d}x = ln|x|$
+	\item $\int u\, \mathrm{d}v = uv-\int v\, \mathrm{d}u$
+	\item $\int a^x\, \mathrm{d}x = \frac{1}{\ln a}a^x$
+	\item $\int \ln x\, \mathrm{d}x = x\ln x-x$
+	\item $\int \tan x\, \mathrm{d}x = \ln |\sec x|$
+	\item $\int \sec x\, \mathrm{d}x = \ln |\sec x+\tan x|$
+	\item $\int \sec^2 x\, \mathrm{d}x = \tan x$
+	\item $\int \sec \tan x\, \mathrm{d}x = \sec x$
+	\item $\int \frac{a}{a^2+x^2}\, \mathrm{d}x = \tan^{-1} \frac{x}{a}$
+	\item $\int \frac{a}{a^2-x^2}\, \mathrm{d}x = \frac{1}{2}\ln |\frac{x+a}{x-a}|$
+	\item $\int \frac{1}{\sqrt{a^2-x^2}}\, \mathrm{d}x = \sin^{-1} \frac{x}{a}$
+	\item $\int \frac{a}{x\sqrt{x^2-a^2}}\, \mathrm{d}x = \sec^{-1} \frac{x}{a}$
+	\item $\int \frac{1}{\sqrt{x^2-a^2}}\, \mathrm{d}x = \cosh^{-1} \frac{x}{a}=\ln (x+\sqrt{x^2-a^2})$
+	\item $\int \frac{1}{\sqrt{x^2+a^2}}\, \mathrm{d}x = \sinh^{-1} \frac{x}{a}=\ln (x+\sqrt{x^2+a^2})$
+\end{enumerate}
+
+%\end{document}
