@@ -75,7 +75,7 @@ void merge(string root,int d=0)
         {
             //cout<<setw(d*2)<<""<<"\\includecpp{"<<FileName<<"}{"<<root+FileName<<"}"<<endl;
             fout<<setw(d*2)<<""<<"\\includecpp{"<<toLatex(FileName)<<"}{"<<toLatex(root+FileName,false)<<"}"<<endl;
-        }else if( FileName=="formula.tex" )
+        }else if( FileName=="formula.tex" || FileName=="java.tex" )
         {
             fout<<setw(d*2)<<""<<"\\includetex{"<<toLatex(FileName)<<"}{"<<toLatex(root+FileName,false)<<"}"<<endl;
         }

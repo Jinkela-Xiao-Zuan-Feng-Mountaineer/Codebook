@@ -13,29 +13,29 @@
 \item 對於平面圖，$E\leq 3V-6$
 \item 對於連通圖G，最大獨立點集的大小設為I(G)，最大匹配大小設為M(G)，最小點覆蓋設為Cv(G)，最小邊覆蓋設為Ce(G)。
 對於任意連通圖：
-	\begin{enumerate}\itemsep = -5pt
+	\begin{enumerate}\itemsep = -3pt
 	\item $I(G)+Cv(G)=|V|$
 	\item $M(G)+Ce(G)=|V|$
 	\end{enumerate}
 \item 對於連通二分圖：
-	\begin{enumerate}\itemsep = -5pt
+	\begin{enumerate}\itemsep = -3pt
 	\item $I(G)=Cv(G)$
 	\item $M(G)=Ce(G)$
 	\end{enumerate}
 \item 最大權閉合圖：
-	\begin{enumerate}\itemsep = -5pt
+	\begin{enumerate}\itemsep = -3pt
 	\item $C(u,V)=\infty ,(u,v)\in E$
 	\item $C(S,v)=W_v ,W_v>0$
 	\item $C(v,T)=-W_v ,W_v<0$
 	\end{enumerate}
 \item 最大密度子圖：
-	\begin{enumerate}\itemsep = -5pt
+	\begin{enumerate}\itemsep = -3pt
 	\item $C(u,v)=1 ,(u,v)\in E$
 	\item $C(S,v)=U_v ,v \in V$
 	\item $C(v,T)=U+2g-d_v ,v \in V$
 	\end{enumerate}
 \item 弦圖：
-	\begin{enumerate}\itemsep = -5pt
+	\begin{enumerate}\itemsep = -3pt
 	\item 完美消除序列從後往前依次給每個點染色，給每個點染上可以染的最小顏色
 	\item 最大團大小=色數
 	\item 最大獨立集:完美消除序列從前往後能選就選
@@ -61,11 +61,11 @@ for(int i=1;i<=n;++i)
 
 
 \subsubsection{學長公式}
-\begin{enumerate}\itemsep = -4pt
+\begin{enumerate}\itemsep = -3pt
 \item $\sum_{d|n} phi(n) = n$
 \item $g(n) = \sum_{d|n} f(d) => f(n) = \sum_{d|n} mu(d)*g(n/d)$
 \item $Harmonic series H_n = ln(n) + \gamma + 1/(2n) - 1/(12n^2) + 1/(120n^4)$
-\item $ \gamma = 0.57721566490153286060651209008240243104215933593992$
+\item $ \gamma = 0.57721566490153286060651209008240243104215$
 \item 格雷碼$=n\oplus (n>>1)$
 \item $SG(A+B)=SG(A)\oplus SG(B)$
 \item 選轉矩陣$M(\theta)= \left( \begin{array}{ccc}
@@ -75,7 +75,7 @@ sin\theta &  cos\theta
 \end{enumerate}
 
 \subsubsection{基本數論}
-\begin{enumerate}\itemsep = -4pt
+\begin{enumerate}\itemsep = -3pt
 	\item $\sum_{d|n} \mu (n)=(n==1)$
 	\item $g(m)=\sum_{d|m}f(d)\Leftrightarrow f(m)=\sum_{d|m}\mu (d)*g(m/d)$
 	\item $\sum_{i=1}^n\sum_{j=1}^m$互質數量$=\sum \mu (d)\left \lfloor \frac{n}{d} \right \rfloor \left \lfloor \frac{m}{d} \right \rfloor$
@@ -83,7 +83,7 @@ sin\theta &  cos\theta
 \end{enumerate}
 
 \subsubsection{排組公式}
-\begin{enumerate}\itemsep = -4pt
+\begin{enumerate}\itemsep = -3pt
 \item k卡特蘭$\frac{C_{n}^{kn}}{n(k-1)+1}$，$C_{m}^{n}=\frac{n!}{m!(n-m)!}$
 \item $H(n,m)\cong x_1+x_2\ldots +x_n=k, num=C_{k}^{n+k-1}$
 \item Stirling number of $2^{nd}$,$n$人分$k$組方法數目
@@ -110,7 +110,7 @@ sin\theta &  cos\theta
 \end{enumerate}
 
 \subsubsection{冪次,冪次和}
-\begin{enumerate}\itemsep = -5pt
+\begin{enumerate}\itemsep = -3pt
 	\item $a^b\%P=a^{b\% \varphi (p)+\varphi (p)},b\geq \varphi (p)$
 	\item $1^3+2^3+3^3+\ldots +n^3=\frac{n^4}{4}+\frac{n^3}{2}+\frac{n^2}{4}$
 	\item $1^4+2^4+3^4+\ldots +n^4=\frac{n^5}{5}+\frac{n^4}{2}+\frac{n^3}{3}-\frac{n}{30}$
@@ -123,7 +123,7 @@ sin\theta &  cos\theta
 \end{enumerate}
 
 \subsubsection{Burnside's lemma}
-\begin{enumerate}\itemsep = -5pt
+\begin{enumerate}\itemsep = -3pt
 	\item $|X/G| = \frac{1}{|G|}\sum_{g \in G}|X^g|$
 	\item $X^g=t^{c(g)}$
 	\item $G$表示有幾種轉法，$X^g$表示在那種轉法下，有幾種是會保持對稱的，$t$是顏色數，$c(g)$是循環節不動的面數。
@@ -131,7 +131,7 @@ sin\theta &  cos\theta
 \end{enumerate}
 
 \subsubsection{Count on a tree}
-\begin{enumerate}\itemsep = -5pt
+\begin{enumerate}\itemsep = -3pt
 	\item Rooted tree: $s_{n+1}=\frac{1}{n}\sum_{i=1}^{n}(i\times a_i\times \sum_{j=1}^{\left \lfloor  n/i\right \rfloor} a_{n+1-i\times j})$
 	\item Unrooted tree: 
 	\begin{enumerate}\itemsep = -2pt
@@ -146,7 +146,7 @@ sin\theta &  cos\theta
 \end{enumerate}
 
 \subsubsection{積分表}
-\begin{enumerate}\itemsep = -5pt
+\begin{enumerate}\itemsep = -3pt
 	\item $\int \frac{1}{x}\, \mathrm{d}x = ln|x|$
 	\item $\int u\, \mathrm{d}v = uv-\int v\, \mathrm{d}u$
 	\item $\int a^x\, \mathrm{d}x = \frac{1}{\ln a}a^x$
