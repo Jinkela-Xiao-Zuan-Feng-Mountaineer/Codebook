@@ -23,8 +23,8 @@ T pow(T a,T b,T mod){//a^b%mod
 		if(b&1)ans=mod_mul(ans,a,mod);
 	return ans;
 }
-int sprp[3]={2,7,61};//int½d³ò¥i¸Ñ
-int llsprp[7]={2,325,9375,28178,450775,9780504,1795265022};//¦Ü¤Öunsigned long long½d³ò
+int sprp[3]={2,7,61};//intç¯„åœå¯è§£
+int llsprp[7]={2,325,9375,28178,450775,9780504,1795265022};//è‡³å°‘unsigned long longç¯„åœ
 template<typename T>
 bool isprime(T n,int *sprp,int num){
 	if(n==2)return 1;

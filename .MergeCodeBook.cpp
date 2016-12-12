@@ -81,7 +81,7 @@ void merge(string root,int d=0)
         }
     }while(FindNextFileW(hD,&fd));
 }
-int main()
+int main(int argv,char **)
 {
     fout.open("list.tex");
     merge(".\\");
@@ -91,5 +91,6 @@ int main()
     fout.open("README.md");
     fout<< ss.str();
     fout.close();
-    system("PAUSE");
+    if(argv==1)
+        system("PAUSE");
 }
