@@ -34,6 +34,16 @@
 	\item $C(S,v)=U_v ,v \in V$
 	\item $C(v,T)=U+2g-d_v ,v \in V$
 	\end{enumerate}
+\item 弦圖：
+	\begin{enumerate}\itemsep = -5pt
+	\item 完美消除序列從後往前依次給每個點染色，給每個點染上可以染的最小顏色
+	\item 最大團大小=色數
+	\item 最大獨立集:完美消除序列從前往後能選就選
+	\item 最小團覆蓋:最大獨立集的點和他延伸的邊構成
+	\item 區間圖是弦圖
+	\item 區間圖的完美消除序列:將區間按造又端點由小到大排序
+	\item 區間圖染色:用線段樹做
+	\end{enumerate}
 \end{enumerate}
 \begin{lstlisting}[language=C++]
 double l=0,=m,stop=1.0/n/n;
