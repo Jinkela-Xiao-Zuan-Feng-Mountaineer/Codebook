@@ -1,4 +1,3 @@
-#include<vector>
 struct splay_tree{
 	int ch[2],pa;//子節點跟父母
 	bool rev;//反轉的懶惰標記
@@ -30,8 +29,7 @@ void rotate(int x){//旋轉，會自行判斷轉的方向
 	node[y].ch[d]=node[x].ch[d^1];
 	node[node[y].ch[d]].pa=y;
 	node[y].pa=x,node[x].ch[d^1]=y;
-	up(y);
-	up(x);
+	up(y),up(x);
 }
 void splay(int x){//將節點x伸展到所在splay tree的根
 	push_down(x);
