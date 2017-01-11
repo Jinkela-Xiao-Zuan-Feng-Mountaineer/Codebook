@@ -6,3 +6,4 @@
 }
 //  !/bin/bash
 //  g++ -std=c++11 -O2 -Wall -Wextra -Wno-unused-variable -DDEBUG $1 && ./a.out
+//  -fsanitize=address -fsanitize=undefined -fsanitize=return
