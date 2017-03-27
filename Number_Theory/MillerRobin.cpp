@@ -10,10 +10,10 @@ LL LLmul(LL a, LL b, const LL &mod) {
 	}
 	return ans;
 }
-long long mod_mul(long long a,long long b,long long m){
-	a%=m,b%=m;
-	long long y=(long long)((double)a*b/m+0.5);/* fast for m < 2^58 */
-	long long r=(a*b-y*m)%m;
+LL mod_mul(LL a,LL b,LL m){
+	a%=m,b%=m;/* fast for m < 2^58 */
+	LL y=(LL)((double)a*b/m+0.5);
+	LL r=(a*b-y*m)%m;
 	return r<0?r+m:r;
 }
 template<typename T>
