@@ -62,9 +62,9 @@ for(int i=1;i<=n;++i)
 
 \subsubsection{學長公式}
 \begin{enumerate}\itemsep = -3pt
-\item $\sum_{d|n} phi(n) = n$
-\item $g(n) = \sum_{d|n} f(d) => f(n) = \sum_{d|n} mu(d)*g(n/d)$
-\item $Harmonic series H_n = ln(n) + \gamma + 1/(2n) - 1/(12n^2) + 1/(120n^4)$
+\item $\sum_{d|n} \phi(n) = n$
+\item $g(n) = \sum_{d|n} f(d) => f(n) = \sum_{d|n} \mu(d) \times g(n/d)$
+\item $\text{Harmonic series } H_n = \ln(n) + \gamma + 1/(2n) - 1/(12n^2) + 1/(120n^4)$
 \item $ \gamma = 0.57721566490153286060651209008240243104215$
 \item 格雷碼$=n\oplus (n>>1)$
 \item $SG(A+B)=SG(A)\oplus SG(B)$
@@ -76,14 +76,15 @@ sin\theta &  cos\theta
 
 \subsubsection{基本數論}
 \begin{enumerate}\itemsep = -3pt
-	\item $\sum_{d|n} \mu (n)=(n==1)$
-	\item $g(m)=\sum_{d|m}f(d)\Leftrightarrow f(m)=\sum_{d|m}\mu (d)*g(m/d)$
+	\item $\sum_{d|n} \mu (n)=[n==1]$
+	\item $g(m)=\sum_{d|m}f(d)\Leftrightarrow f(m)=\sum_{d|m}\mu (d) \times g(m/d)$
 	\item $\sum_{i=1}^n\sum_{j=1}^m$互質數量$=\sum \mu (d)\left \lfloor \frac{n}{d} \right \rfloor \left \lfloor \frac{m}{d} \right \rfloor$
-	\item $\sum_{i=1}^n\sum_{j=1}^nlcm(i,j)=n\sum_{d|n}d\phi (d)$
+	\item $\sum_{i=1}^n\sum_{j=1}^nlcm(i,j)=n\sum_{d|n} d \times \phi (d)$
 \end{enumerate}
 
 \subsubsection{排組公式}
-\begin{enumerate}\itemsep = -3pt
+\begin{enumerate}
+\itemsep = -3pt
 \item k卡特蘭$\frac{C_{n}^{kn}}{n(k-1)+1}$，$C_{m}^{n}=\frac{n!}{m!(n-m)!}$
 \item $H(n,m)\cong x_1+x_2\ldots +x_n=k, num=C_{k}^{n+k-1}$
 \item Stirling number of $2^{nd}$,$n$人分$k$組方法數目
@@ -99,15 +100,29 @@ sin\theta &  cos\theta
 		\item $B_{n+1}=\sum_{k=0}^{n} C_k^n B_k$
 		\item $B_{p+n}\equiv B{_n}+B_{n+1} mod p$, p is prime
 		\item $B_{p^m+n}\equiv mB{_n}+B_{n+1} mod p$, p is prime
-		\item From B0:$1,1,2,5,15,52,\\203,877,4140,21147,115975$
+		\item From $B_0: 1,1,2,5,15,52,\\203,877,4140,21147,115975$
 	\end{enumerate}
 \item Derangement,錯排,沒有人在自己位置上
 	\begin{enumerate}\itemsep = -2pt
 		\item $D_n=n!(1-\frac{1}{1!}+\frac{1}{2!}-\frac{1}{3!}\ldots +(-1)^n\frac{1}{n!})$
 		\item $D_n=(n-1)(D_{n-1}+D_{n-2}),D_0=1,D_1=0$
-		\item From D0:$1,0,1,2,9,44,\\265,1854,14833,133496$
+		\item From $D_0: 1,0,1,2,9,44,\\265,1854,14833,133496$
+	\end{enumerate}
+\item Binomial\ Equality
+	\begin{enumerate}\itemsep = -2pt
+	    \item $\sum_k \binom{r}{m + k} \binom{s}{n - k} = \binom{r + s}{m + n}$
+         \item $\sum_k \binom{l}{m + k} \binom{s}{n + k} = \binom{l + s}{l -m + n}$		
+         \item $\sum_k \binom{l}{m + k} \binom{s + k}{n}(-1)^k = (-1)^{l + m} \binom{s - m}{n - l}$
+		\item $\sum_{k\leq l} \binom{l - k}{m} \binom{s}{k - n}(-1)^k = (-1)^{l + m} \binom{s - m - 1}{l - n - m}$
+		\item $\sum_{0 \leq k \leq l} \binom{l - k}{m} \binom{q + k}{n} = \binom{l + q + 1}{m + n + 1}$
+		\item $\binom{r}{k} = (-1)^k\binom{k - r - 1}{k}$
+		\item $\binom{r}{m} \binom{m}{k} = \binom{r}{k} \binom{r - k}{m - k}$
+		\item $\sum_{k\leq n} \binom{r + k}{k} = \binom{r + n + 1}{n}$
+		\item $\sum_{0\leq k \leq n} \binom{k}{m} = \binom{n + 1}{m + 1}$
+		\item $\sum_{k\leq m}\binom{m + r}{k}x^ky^k = \sum_{k\leq m}\binom{-r}{k}(-x)^k (x+y)^{m-k}$	
 	\end{enumerate}
 \end{enumerate}
+
 
 \subsubsection{冪次,冪次和}
 \begin{enumerate}\itemsep = -3pt
