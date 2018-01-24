@@ -10,7 +10,7 @@ vector<int> rev(vector<int> A) {
   return A;
 }
 vector<int> fast_AND_transform(vector<int> f, bool inverse) {
-	return rev(fast_OR_transform(rev(f), inverse));
+  return rev(fast_OR_transform(rev(f), inverse));
 }
 vector<int> fast_XOR_transform(vector<int> f, bool inverse) {
   for (int i = 0; (2 << i) <= f.size(); ++i) 
