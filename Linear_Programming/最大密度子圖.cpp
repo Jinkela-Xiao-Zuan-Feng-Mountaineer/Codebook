@@ -59,13 +59,11 @@ int main(){
 		build(l);
 		isap.min_cut(s,t);
 		vector<int> ans;
-		for(int i=1;i<=n;++i){
+		for(int i=1;i<=n;++i)
 			if(isap.vis[i])ans.push_back(i);
-		}
 		printf("%d\n",ans.size());
-		for(size_t i=0;i<ans.size();++i){
+		for(size_t i=0;i<ans.size();++i)
 			printf("%d\n",ans[i]);
-		}
 	}
 	return 0;
 }

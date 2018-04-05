@@ -17,8 +17,7 @@ struct zhu_liu{
 	int st[MAXN*2],id[MAXN*2],m;
 	void init(int n){
 		for(int i=1;i<=n;++i){
-			pq[i]=E[i]=0;
-			st[i]=id[i]=i;
+			pq[i]=E[i]=0, st[i]=id[i]=i;
 		}m=0;
 	}
 	node *merge(node *a,node *b){//skew heap

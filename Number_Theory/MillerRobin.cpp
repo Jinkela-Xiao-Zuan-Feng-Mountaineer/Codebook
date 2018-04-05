@@ -24,7 +24,8 @@ T pow(T a,T b,T mod){//a^b%mod
 	return ans;
 }
 int sprp[3]={2,7,61};//int範圍可解
-int llsprp[7]={2,325,9375,28178,450775,9780504,1795265022};//至少unsigned long long範圍
+int llsprp[7]={2,325,9375,28178,450775,9780504,
+1795265022};//至少unsigned long long範圍
 template<typename T>
 bool isprime(T n,int *sprp,int num){
 	if(n==2)return 1;

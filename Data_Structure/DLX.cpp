@@ -1,6 +1,4 @@
-#define MAXN 4100
-#define MAXM 1030
-#define MAXND 16390
+const int MAXN=4100, MAXM=1030, MAXND=16390;
 struct DLX{
 	int n,m,sz,ansd;//高是n，寬是m的稀疏矩陣 
 	int S[MAXM],H[MAXN];
@@ -82,8 +80,7 @@ struct DLX{
 		}
 	}
 	bool exact_cover(){//解精確覆蓋問題 
-		ans.clear();//答案
-		return dfs(0);
+		return ans.clear(), dfs(0);
 	}
 	void min_cover(){//解最小重複覆蓋問題 
 		anst.clear();//暫存用，答案還是存在ans裡 

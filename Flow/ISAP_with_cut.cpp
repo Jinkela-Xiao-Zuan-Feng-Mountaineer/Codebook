@@ -46,11 +46,9 @@ struct ISAP{
 		memset(d,0,sizeof(int)*(n+1));
 		memset(gap,0,sizeof(int)*(n+1));
 		memcpy(cur,g,sizeof(int)*(n+1));
-		if(clean){
-			for(size_t i=0;i<e.size();++i){
-				e[i].flow=0;
-				e[i].r=e[i].cap;
-			}
+		if(clean) for(size_t i=0;i<e.size();++i){
+			e[i].flow=0;
+			e[i].r=e[i].cap;
 		}
 		T max_flow=0;
 		for(gap[0]=n;d[s]<n;)max_flow+=dfs(s,s,t);
@@ -60,19 +58,16 @@ struct ISAP{
 	bool vis[MAXN];
 	void dfs_cut(int u){
 		vis[u]=1;//表示u屬於source的最小割集 
-		for(int i=g[u];~i;i=e[i].pre){
+		for(int i=g[u];~i;i=e[i].pre)
 			if(e[i].flow<e[i].cap&&!vis[e[i].v])dfs_cut(e[i].v);
-		}
 	}
 	T min_cut(int s,int t){
 		T ans=isap(s,t);
 		memset(vis,0,sizeof(bool)*(n+1));
-		dfs_cut(s),cut_e.clear();
-		for(int u=0;u<=n;++u){
-			if(vis[u])for(int i=g[u];~i;i=e[i].pre){
+		dfs_cut(s), cut_e.clear();
+		for(int u=0;u<=n;++u)
+			if(vis[u])for(int i=g[u];~i;i=e[i].pre)
 				if(!vis[e[i].v])cut_e.push_back(i);
-			}
-		}
 		return ans;
 	}
 };

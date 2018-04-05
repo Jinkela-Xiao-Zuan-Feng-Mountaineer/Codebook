@@ -1,11 +1,9 @@
 struct Graph {
   // Minimum General Weighted Matching (Perfect Match) 0-base
   static const int MXN = 105;
-
   int n, edge[MXN][MXN];
   int match[MXN],dis[MXN],onstk[MXN];
   vector<int> stk;
-
   void init(int _n) {
     n = _n;
     for (int i=0; i<n; i++)
@@ -36,17 +34,14 @@ struct Graph {
     stk.pop_back();
     return false;
   }
-
   int solve() {
     // find a match
     for (int i=0; i<n; i+=2){
-      match[i] = i+1;
-      match[i+1] = i;
+      match[i] = i+1, match[i+1] = i;
     }
     for(;;){
       int found = 0;
-      for (int i=0; i<n; i++)
-        dis[i] = onstk[i] = 0;
+      for (int i=0; i<n; i++) dis[i] = onstk[i] = 0;
       for (int i=0; i<n; i++){
         stk.clear();
         if (!onstk[i] && SPFA(i)){

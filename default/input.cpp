@@ -4,7 +4,6 @@
 	while('0'<=ch&&ch<='9')x=x*10-'0'+ch,ch=getchar();
 	return f?-x:x;
 }
-volatile
 // #!/bin/bash
 // g++ -std=c++11 -O2 -Wall -Wextra -Wno-unused-result -DDEBUG $1 && ./a.out
 //  -fsanitize=address -fsanitize=undefined -fsanitize=return

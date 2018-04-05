@@ -2,8 +2,7 @@ template<typename T>
 struct DINIC{
 	static const int MAXN=105;
 	static const T INF=INT_MAX;
-	int n;//點數
-	int level[MAXN],cur[MAXN];
+	int n, level[MAXN], cur[MAXN];
 	struct edge{
 		int v,pre;
 		T cap,flow,r;
@@ -24,7 +23,7 @@ struct DINIC{
 	int bfs(int s,int t){
 		memset(level,0,sizeof(int)*(n+1));
 		memcpy(cur,g,sizeof(int)*(n+1));
-		queue<int >q;
+		queue<int> q;
 		q.push(s);
 		level[s]=1;
 		while(q.size()){
@@ -62,7 +61,7 @@ struct DINIC{
 				e[i].r=e[i].cap;
 			}
 		}
-		T ans=0,mf=0;
+		T ans=0, mf=0;
 		while(bfs(s,t))while(mf=dfs(s,t))ans+=mf;
 		return ans;
 	}

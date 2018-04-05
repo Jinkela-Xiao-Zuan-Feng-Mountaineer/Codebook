@@ -2,6 +2,7 @@
 #pragma GCC optimize "Ofast"
 //stack resize,change esp to rsp if 64-bit system
 asm("mov %0,%%esp\n" ::"g"(mem+10000000));
+-Wl,--stack,214748364 -trigraphs
 //linux stack resize
 #include<sys/resource.h>
 void increase_stack(){

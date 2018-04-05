@@ -1,7 +1,7 @@
 #define INF LLONG_MAX
 template<typename T>
 T closest_pair(vector<point<T> >&v,vector<point<T> >&t,int l,int r){
-	T dis=INF,tmd;
+	T dis=INF, tmd;
 	if(l>=r)return dis;
 	int mid=(l+r)/2;
 	if((tmd=closest_pair(v,t,l,mid))<dis)dis=tmd;
@@ -10,8 +10,8 @@ T closest_pair(vector<point<T> >&v,vector<point<T> >&t,int l,int r){
 	for(int i=l;i<=r;++i)
 		if((v[i].x-v[mid].x)*(v[i].x-v[mid].x)<dis)t.push_back(v[i]);
 	sort(t.begin(),t.end(),point<T>::y_cmp);//如果用merge_sort的方式可以O(n)
-	for(int i=0;i<(int)t.size();++i)
-		for(int j=1;j<=3&&i+j<(int)t.size();++j)
+	for(size_t i=0;i<t.size();++i)
+		for(size_t j=1;j<=3&&i+j<t.size();++j)
 			if((tmd=(t[i]-t[i+j]).abs2())<dis)dis=tmd;
 	return dis;
 }

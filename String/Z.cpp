@@ -1,4 +1,4 @@
-inline void z_alg(char *s,int len,int *z){
+void z_alg(char *s,int len,int *z){
 	int l=0,r=0;
 	z[0]=len;
 	for(int i=1;i<len;++i){

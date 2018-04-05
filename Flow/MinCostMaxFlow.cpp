@@ -54,8 +54,7 @@ struct MCMF{
 		for(int u=0;u<=n;++u)
 			for(int i=g[u];~i;i=e[i].pre)
 				e[i].cost+=dis[e[i].v]-dis[u];
-		piS+=dis[S];
-		return dis[S]<INF;
+		return piS+=dis[S], dis[S]<INF;
 	}
 	_T mincost(int s,int t){
 		S=s,T=t;
@@ -63,7 +62,6 @@ struct MCMF{
 		while(modlabel()){
 			do memset(vis,0,sizeof(bool)*(n+1));
 			while(augment(S,INF));
-		}
-		return ans;
+		}return ans;
 	}
 };

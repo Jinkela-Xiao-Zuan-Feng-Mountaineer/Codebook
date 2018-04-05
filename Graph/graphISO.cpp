@@ -3,18 +3,16 @@ const long long A=3,B=11,C=2,D=19,P=0xdefaced;
 long long f[K+1][MAXN];
 vector<int> g[MAXN],rg[MAXN];
 int n;
-inline void init(){
+void init(){
 	for(int i=0;i<n;++i){
 		f[0][i]=1;
-		g[i].clear();
-		rg[i].clear();
+		g[i].clear(), rg[i].clear();
 	}
 }
-inline void add_edge(int u,int v){
-	g[u].push_back(v);
-	rg[v].push_back(u);
+void add_edge(int u,int v){
+	g[u].push_back(v), rg[v].push_back(u);
 }
-inline long long point_hash(int u){//O(N) 
+long long point_hash(int u){//O(N) 
 	for(int t=1;t<=K;++t){
 		for(int i=0;i<n;++i){
 			f[t][i]=f[t-1][i]*A%P;
@@ -26,7 +24,7 @@ inline long long point_hash(int u){//O(N)
 	}
 	return f[K][u];
 }
-inline vector<long long> graph_hash(){
+vector<long long> graph_hash(){
 	vector<long long> ans;
 	for(int i=0;i<n;++i)ans.push_back(point_hash(i));//O(N^2) 
 	sort(ans.begin(),ans.end());

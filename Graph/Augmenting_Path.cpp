@@ -9,10 +9,8 @@ bool dfs(int u){
 		int v=g[u][i];
 		if(vis[v])continue;
 		vis[v]=1;
-		if(match[v]==-1||dfs(match[v])){
-			match[v]=u;
-			return 1;
-		}
+		if(match[v]==-1||dfs(match[v]))
+			return match[v]=u, 1;
 	}
 	return 0;
 }
