@@ -9,13 +9,13 @@ struct point{
 		return abs(x-p.x)+abs(y-p.y);
 	}
 };
-inline bool cmpx(const point &a,const point &b){
+bool cmpx(const point &a,const point &b){
 	return a.x<b.x||(a.x==b.x&&a.y<b.y);
 }
 struct edge{
 	int u,v;
 	T cost;
-	edge(int u,int v,const T&c):u(u),v(v),cost(c){}
+	edge(int u,int v,T c):u(u),v(v),cost(c){}
 	bool operator<(const edge&e)const{
 		return cost<e.cost;
 	}
@@ -37,7 +37,7 @@ int bit_find(int i,int m){
 	return x.id;
 }
 vector<edge> build_graph(int n,point p[]){
-	vector<edge> e;//回傳的邊就可以用來求最小生成樹 
+	vector<edge> e;//edge for MST 
 	for(int dir=0;dir<4;++dir){//4種座標變換 
 		if(dir%2) for(int i=0;i<n;++i) swap(p[i].x,p[i].y);
 		else if(dir==2) for(int i=0;i<n;++i) p[i].x=-p[i].x;

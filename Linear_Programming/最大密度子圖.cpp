@@ -26,9 +26,8 @@ ISAP<T> isap;//網路流
 int s,t;//原匯點 
 void build(T L){
 	isap.init(n+2);
-	for(size_t i=0;i<E.size();++i){
+	for(size_t i=0;i<E.size();++i)
 		isap.add_edge(E[i].u,E[i].v,E[i].w);
-	}
 	for(int v=1;v<=n;++v){
 		isap.add_edge(s,v,U);
 		isap.add_edge(v,t,U+2*L-de[v]-2*pv[v]);

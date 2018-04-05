@@ -1,12 +1,11 @@
-void BS(int l,int r,vector<Item> &vs){
-	//答案該<l會有的已經做完了 
-	if(l==r)整個vs的答案=l;//??????
-	int mid=(l+r)/2;
-	do_thing(l,mid);//做答案<=mid會做的事 
-	vector<Item> left=vs裡滿足的; 
-	vector<Item> right=vs-left;
-	undo_thing(l,mid);
-	BS(l,mid,left);
-	do_thing(l,mid);
-	BS(mid+1,r,right);//??????
+void totBS(int L, int R, vector<Item> M){
+	if(Q.empty()) return; //維護全域B陣列
+	if(L==R) 整個M的答案=r, return;
+	int mid = (L+R)/2;
+	vector<Item> mL, mR;
+	do_modify_B_with_divide(mid,M);
+	//讓B陣列在遞迴的時候只會保留[L~mid]的資訊
+	undo_modify_B(mid,M);
+	totBS(L,mid,mL);
+	totBS(mid+1,R,mR);
 }

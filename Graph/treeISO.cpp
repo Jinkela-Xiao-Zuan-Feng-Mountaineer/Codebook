@@ -5,7 +5,7 @@ bool vis[MAXN];
 long long dfs(int u){//hash ver
 	vis[u]=1;
 	vector<long long> tmp;
-	for(auto v:g[u])if(!vis[v])tmp.push_back(dfs(v));
+	for(auto v:g[u])if(!vis[v])tmp.PB(dfs(v));
 	if(tmp.empty())return 177;
 	long long ret=4931;
 	sort(tmp.begin(),tmp.end());
