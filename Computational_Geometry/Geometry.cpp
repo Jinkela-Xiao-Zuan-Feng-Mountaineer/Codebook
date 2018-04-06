@@ -416,79 +416,48 @@ struct tetrahedron{//四面體
 };
 template<typename T>
 struct convexhull3D{
-	static const int MAXN=105;
+	static const int MAXN=1005;
 	struct face{
 		int a,b,c;
-		bool use;
-		face(){}
-		face(int a,int b,int c):a(a),b(b),c(c),use(1){}
+		face(int a,int b,int c):a(a),b(b),c(c){}
 	};
-	vector<point3D<T> > pt;
-	vector<face> fc;
+	vector<point3D<T>> pt;
+	vector<face> ans;
 	int fid[MAXN][MAXN];
-	static bool point_cmp(const point3D<T> &a,const point3D<T> &b){
-		return a.x<b.x||(a.x==b.x&&(a.y<b.y||(a.y==b.y&&a.z<b.z)));
-	}
-	bool outside(int p,int a,int b,int c)const{
-		return tetrahedron<T>(pt[a],pt[b],pt[c],pt[p]).volume6()<0;
-	}
-	bool outside(int p,int f)const{return outside(p,fc[f].a,fc[f].b,fc[f].c);}
-	void AddFace(int a,int b,int c,int p){
-		if(outside(p,a,b,c))fid[c][b]=fid[b][a]=fid[a][c]=fc.size(),fc.push_back(face(c,b,a));
-		else fid[a][b]=fid[b][c]=fid[c][a]=fc.size(),fc.push_back(face(a,b,c));
-	}
-	bool dfs(int p,int f){
-		if(!fc[f].use)return true;
-		if(outside(p,f)){
-			int a=fc[f].a,b=fc[f].b,c=fc[f].c;
-			fc[f].use=false;
-			if(!dfs(p,fid[b][a]))AddFace(p,a,b,c);
-			if(!dfs(p,fid[c][b]))AddFace(p,b,c,a);
-			if(!dfs(p,fid[a][c]))AddFace(p,c,a,b);
-			return true;
-		}else return false;
-	}
 	void build(){
-		bool ok=false;
-		fc.clear();
-		sort(pt.begin(),pt.end(),point_cmp);
-		pt.resize(unique(pt.begin(),pt.end())-pt.begin());
-		for(size_t i=2;i<pt.size();++i){
-			if((pt[0]-pt[i]).area2(pt[1]-pt[i])!=0){
-				ok=true;
-				swap(pt[i],pt[2]);
-				break;
+		int n=pt.size();
+		ans.clear();
+		memset(fid,0,sizeof(fid));
+		ans.emplace_back(0,1,2);
+		ans.emplace_back(2,1,0);
+		int ftop = 0;
+		for(int i=3, ftop=1; i<n; ++i,++ftop){
+			vector<face> next;
+			for(auto &f:ans){
+				T d=(pt[i]-pt[f.a]).dot((pt[f.b]-pt[f.a]).cross(pt[f.c]-pt[f.a]));
+				if(d<=0) next.push_back(f);
+				int ff=0;
+				if(d>0) ff=ftop;
+				else if(d<0) ff=-ftop;
+				fid[f.a][f.b]=fid[f.b][f.c]=fid[f.c][f.a]=ff;
 			}
-		}
-		if(!ok)return;
-		ok=false;
-		for(size_t i=3;i<pt.size();++i){
-			if(tetrahedron<T>(pt[0],pt[1],pt[2],pt[i]).volume6()!=0){
-				ok=true;
-				swap(pt[i],pt[3]);
-				break;
+			for(auto &f:ans){
+				if(fid[f.a][f.b]>0 && fid[f.a][f.b]!=fid[f.b][f.a])
+					next.emplace_back(f.a,f.b,i);
+				if(fid[f.b][f.c]>0 && fid[f.b][f.c]!=fid[f.c][f.b])
+					next.emplace_back(f.b,f.c,i);
+				if(fid[f.c][f.a]>0 && fid[f.c][f.a]!=fid[f.a][f.c])
+					next.emplace_back(f.c,f.a,i);
 			}
+			ans=next;
 		}
-		if(!ok)return;
-		for(int i=0;i<4;++i)AddFace(i,(i+1)%4,(i+2)%4,(i+3)%4);
-		for(size_t i=4;i<pt.size();++i){
-			for(int j=fc.size()-1;j>=0;--j){
-				if(outside(i,j)){
-					dfs(i,j);
-					break;
-				}
-			}
-		}
-		size_t sz=0;
-		for(size_t i=0;i<fc.size();++i)if(fc[i].use)fc[sz++]=fc[i];
-		fc.resize(sz);
 	}
 	point3D<T> centroid()const{
 		point3D<T> res(0,0,0);
 		T vol=0;
-		for(size_t i=0;i<fc.size();++i){
-			T tmp=pt[fc[i].a].dot(pt[fc[i].b].cross(pt[fc[i].c]));
-			res=res+(pt[fc[i].a]+pt[fc[i].b]+pt[fc[i].c])*tmp;
+		for(auto &f:ans){
+			T tmp=pt[f.a].dot(pt[f.b].cross(pt[f.c]));
+			res=res+(pt[f.a]+pt[f.b]+pt[f.c])*tmp;
 			vol+=tmp;
 		}
 		return res/(vol*4);
