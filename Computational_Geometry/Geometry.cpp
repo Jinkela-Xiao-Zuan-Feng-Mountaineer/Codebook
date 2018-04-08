@@ -5,27 +5,25 @@ struct point{
 	point(){}
 	point(const T&x,const T&y):x(x),y(y){}
 	point operator+(const point &b)const{
-		return point(x+b.x,y+b.y);}
+		return point(x+b.x,y+b.y); }
 	point operator-(const point &b)const{
-		return point(x-b.x,y-b.y);}
+		return point(x-b.x,y-b.y); }
 	point operator*(const T &b)const{
-		return point(x*b,y*b);}
+		return point(x*b,y*b); }
 	point operator/(const T &b)const{
-		return point(x/b,y/b);}
+		return point(x/b,y/b); }
 	bool operator==(const point &b)const{
-		return x==b.x&&y==b.y;}
+		return x==b.x&&y==b.y; }
 	T dot(const point &b)const{
-		return x*b.x+y*b.y;}
+		return x*b.x+y*b.y; }
 	T cross(const point &b)const{
-		return x*b.y-y*b.x;}
+		return x*b.y-y*b.x; }
 	point normal()const{//求法向量
-		return point(-y,x);}
+		return point(-y,x); }
 	T abs2()const{//向量長度的平方
-		return dot(*this);
-	}
+		return dot(*this); }
 	T rad(const point &b)const{//兩向量的弧度
-		return fabs(atan2(fabs(cross(b)),dot(b)));
-	}
+return fabs(atan2(fabs(cross(b)),dot(b))); }
 	T getA()const{//對x軸的弧度 
 		T A=atan2(y,x);//超過180度會變負的 
 		if(A<=-PI/2)A+=PI*2;
@@ -66,22 +64,22 @@ struct line{
 		point<T> n=(p2-p1).normal();
 		return p-n*(p-p1).dot(n)/n.abs2();
 	}
-	point<T> mirror(const point<T> &p)const{//點對直線的鏡射
-		//要先呼叫pton轉成一般式
-		point<T> ans;
+	point<T> mirror(const point<T> &p)const{
+		//點對直線的鏡射，要先呼叫pton轉成一般式
+		point<T> R;
 		T d=a*a+b*b;
-		ans.x=(b*b*p.x-a*a*p.x-2*a*b*p.y-2*a*c)/d;
-		ans.y=(a*a*p.y-b*b*p.y-2*a*b*p.x-2*b*c)/d;
-		return ans;
+		R.x=(b*b*p.x-a*a*p.x-2*a*b*p.y-2*a*c)/d;
+		R.y=(a*a*p.y-b*b*p.y-2*a*b*p.x-2*b*c)/d;
+		return R;
 	}
 	bool equal(const line &l)const{//直線相等
 		return cross(l.p1)==0&&cross(l.p2)==0;
 	}
-	bool parallel(const line &l)const{//直線平行
+	bool parallel(const line &l)const{
 		return (p1-p2).cross(l.p1-l.p2)==0;
 	}
-	bool cross_seg(const line &l)const{//直線是否交線段
-		return (p2-p1).cross(l.p1-p1)*(p2-p1).cross(l.p2-p1)<=0;
+	bool cross_seg(const line &l)const{
+		return (p2-p1).cross(l.p1-p1)*(p2-p1).cross(l.p2-p1)<=0;//直線是否交線段
 	}
 	char line_intersect(const line &l)const{//直線相交情況，-1無限多點、1交於一點、0不相交
 		return parallel(l)?(cross(l.p1)==0?-1:0):1;
@@ -185,14 +183,14 @@ struct polygon{
 		}
 		return ans;
 	}
-	static bool graham_cmp(const point<T>& a,const point<T>& b){
-		return (a.x<b.x)||(a.x==b.x&&a.y<b.y);//凸包排序函數
+	static bool graham_cmp(const point<T>& a,const point<T>& b){//凸包排序函數
+		return (a.x<b.x)||(a.x==b.x&&a.y<b.y);
 	}
 	void graham(vector<point<T> > &s){//凸包
 		sort(s.begin(),s.end(),graham_cmp);
 		p.resize(s.size()+1);
 		int m=0;
-		for(int i=0;i<(int)s.size();++i){
+		for(size_t i=0;i<s.size();++i){
 			while(m>=2&&(p[m-1]-p[m-2]).cross(s[i]-p[m-2])<=0)--m;
 			p[m++]=s[i];
 		}
@@ -244,8 +242,8 @@ struct polygon{
 	T dis2(polygon &pl){//凸包最近距離平方
 		vector<point<T> > &P=p,&Q=pl.p;
 		int n=P.size(),m=Q.size(),l=0,r=0;
-		for(int i=0;i<n;++i)if(P[i].y<P[l].y)l=i;
-		for(int i=0;i<m;++i)if(Q[i].y<Q[r].y)r=i;
+	for(int i=0;i<n;++i)if(P[i].y<P[l].y)l=i;
+	for(int i=0;i<m;++i)if(Q[i].y<Q[r].y)r=i;
 		P.push_back(P[0]),Q.push_back(Q[0]);
 		T ans=1e99;
 		for(int i=0;i<n;++i){
@@ -358,9 +356,9 @@ struct line3D{
 		point3D<T> N=v1.cross(v2),ab(p1-l.p1);
 		//if(N.abs2()==0)return NULL;平行或重合
 		T tmp=N.dot(ab),ans=tmp*tmp/N.abs2();//最近點對距離
-		point3D<T> d1=p2-p1,d2=l.p2-l.p1,D=d1.cross(d2);
-		T t1=((l.p1-p1).cross(d2)).dot(D)/D.abs2();
-		T t2=((l.p1-p1).cross(d1)).dot(D)/D.abs2();
+		point3D<T> d1=p2-p1,d2=l.p2-l.p1,D=d1.cross(d2),G=l.p1-p1;
+		T t1=(G.cross(d2)).dot(D)/D.abs2();
+		T t2=(G.cross(d1)).dot(D)/D.abs2();
 		return make_pair(p1+d1*t1,l.p1+d2*t2);
 	}
 	bool same_side(const point3D<T> &a,const point3D<T> &b)const{

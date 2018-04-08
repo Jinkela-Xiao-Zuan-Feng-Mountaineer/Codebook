@@ -10,5 +10,5 @@ int min_string_rotation(const string &s){
 			k=0;
 		}
 	}
-	return min(i,j);//傳回最小循環表示法起始位置
+	return min(i,j);//最小循環表示法起始位置
 }

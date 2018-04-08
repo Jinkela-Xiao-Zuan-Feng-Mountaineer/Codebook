@@ -3,7 +3,7 @@
 #define INF 0x3f3f3f3f
 struct point{
 	T x,y;
-	int id;//每個點的編號都要不一樣，從0開始編號 
+	int id;//從0開始編號 
 	point(){}
 	T dist(const point &p)const{
 		return abs(x-p.x)+abs(y-p.y);
