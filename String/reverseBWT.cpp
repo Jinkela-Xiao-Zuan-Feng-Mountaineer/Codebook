@@ -15,9 +15,9 @@ void firstCol(){
 		totc += tots[c];
 	}
 }
-string reverseBwt(const string &bw,int begin){
+string reverseBwt(string bw,int begin){
 	rankBWT(bw), firstCol();
-	int i = begin; //原本字串最後一個元素的位置
+	int i = begin; //原字串最後一個元素的位置
 	string res;
 	do{
 		char c = bw[i];

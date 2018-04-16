@@ -426,7 +426,7 @@ struct convexhull3D{
 		int n=pt.size();
 		ans.clear();
 		memset(fid,0,sizeof(fid));
-		ans.emplace_back(0,1,2);
+		ans.emplace_back(0,1,2);//注意不能共線
 		ans.emplace_back(2,1,0);
 		int ftop = 0;
 		for(int i=3, ftop=1; i<n; ++i,++ftop){
