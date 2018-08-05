@@ -44,8 +44,11 @@ struct line{
 	T cross(const point<T> &p)const{//點和有向直線的關係，>0左邊、=0在線上<0右邊
 		return (p2-p1).cross(p-p1);
 	}
-	bool point_on_segment(const point<T>&p)const{//點是否線段上
-		return cross(p)==0&&(p1-p).dot(p2-p)<=0; 
+	T btw(const point<T> &p)const{//點投影落在線段上<=0 
+		return (p1-p).dot(p2-p);
+	}
+	bool point_on_segment(const point<T>&p)const{
+		return cross(p)==0&&btw(p)<=0; //點是否在線段上
 	}
 	T dis2(const point<T> &p,bool is_segment=0)const{//點跟直線/線段的距離平方
 		point<T> v=p2-p1,v1=p-p1;
@@ -81,22 +84,21 @@ struct line{
 	bool cross_seg(const line &l)const{
 		return (p2-p1).cross(l.p1-p1)*(p2-p1).cross(l.p2-p1)<=0;//直線是否交線段
 	}
-	char line_intersect(const line &l)const{//直線相交情況，-1無限多點、1交於一點、0不相交
+	int line_intersect(const line &l)const{//直線相交情況，-1無限多點、1交於一點、0不相交
 		return parallel(l)?(cross(l.p1)==0?-1:0):1;
 	}
-	char seg_intersect(const line &l)const{//線段相交情況，-1無限多點、1交於一點、0不相交
-		T c1=(p2-p1).cross(l.p1-p1);
-		T c2=(p2-p1).cross(l.p2-p1);
-		T c3=(l.p2-l.p1).cross(p1-l.p1);
-		T c4=(l.p2-l.p1).cross(p2-l.p1);
-		if(c1==0&&c2==0){
-			if(p1==l.p1&&(p2-p1).dot(l.p2)<=0)return 1;
-			if(p1==l.p2&&(p2-p1).dot(l.p1)<=0)return 1;
-			if(p2==l.p1&&(p1-p2).dot(l.p2)<=0)return 1;
-			if(p2==l.p2&&(p1-p2).dot(l.p1)<=0)return 1;
-			return -1;
+	int seg_intersect(const line &l)const{
+		T c1=cross(l.p1), c2=cross(l.p2);
+		T c3=l.cross(p1), c4=l.cross(p2);
+		if(c1==0&&c2==0){//共線
+			T a1=btw(l.p1),a2=btw(l.p2);
+			T a3=l.btw(p1),a4=l.btw(p2);
+		if(a3==0&&a1>=0&&a2>=0&&a4>=0) return 2;
+		if(a4==0&&a1>=0&&a2>=0&&a3>=0) return 3;
+		if(a1>=0&&a2>=0&&a3>=0&&a4>=0) return 0;
+			return -1;//無限交點
 		}else if(c1*c2<=0&&c3*c4<=0)return 1;
-		return 0;
+		return 0;//不相交
 	}
 	point<T> line_intersection(const line &l)const{/*直線交點*/ 
 		point<T> a=p2-p1,b=l.p2-l.p1,s=l.p1-p1;
@@ -104,17 +106,11 @@ struct line{
 		return p1+a*(s.cross(b)/a.cross(b));
 	}
 	point<T> seg_intersection(const line &l)const{//線段交點
-		T c1=(p2-p1).cross(l.p1-p1);
-		T c2=(p2-p1).cross(l.p2-p1);
-		T c3=(l.p2-l.p1).cross(p1-l.p1);
-		T c4=(l.p2-l.p1).cross(p2-l.p1);
-		if(c1==0&&c2==0){
-			if(p1==l.p1&&(p2-p1).dot(l.p2)<=0)return p1;
-			if(p1==l.p2&&(p2-p1).dot(l.p1)<=0)return p1;
-			if(p2==l.p1&&(p1-p2).dot(l.p2)<=0)return p2;
-			if(p2==l.p2&&(p1-p2).dot(l.p1)<=0)return p2;
-		}else if(c1*c2<=0&&c3*c4<=0)return line_intersection(l);
-		//return INF;
+		int res=seg_intersect(l);
+		if(res<=0) assert(0);
+		if(res==2) return p1;
+		if(res==3) return p2;
+		return line_intersection(l);
 	}
 };
 template<typename T>
