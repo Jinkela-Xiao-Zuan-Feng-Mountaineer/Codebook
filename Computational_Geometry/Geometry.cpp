@@ -41,14 +41,14 @@ struct line{
 		b=p2.x-p1.x;
 		c=-a*p1.x-b*p1.y;
 	}
-	T cross(const point<T> &p)const{//點和有向直線的關係，>0左邊、=0在線上<0右邊
+	T ori(const point<T> &p)const{//點和有向直線的關係，>0左邊、=0在線上<0右邊
 		return (p2-p1).cross(p-p1);
 	}
 	T btw(const point<T> &p)const{//點投影落在線段上<=0 
 		return (p1-p).dot(p2-p);
 	}
-	bool point_on_segment(const point<T>&p)const{
-		return cross(p)==0&&btw(p)<=0; //點是否在線段上
+	bool point_on_segment(const point<T>&p)const{//點是否在線段上
+		return ori(p)==0&&btw(p)<=0;
 	}
 	T dis2(const point<T> &p,bool is_segment=0)const{//點跟直線/線段的距離平方
 		point<T> v=p2-p1,v1=p-p1;
@@ -76,7 +76,7 @@ struct line{
 		return R;
 	}
 	bool equal(const line &l)const{//直線相等
-		return cross(l.p1)==0&&cross(l.p2)==0;
+		return ori(l.p1)==0&&ori(l.p2)==0;
 	}
 	bool parallel(const line &l)const{
 		return (p1-p2).cross(l.p1-l.p2)==0;
@@ -85,17 +85,17 @@ struct line{
 		return (p2-p1).cross(l.p1-p1)*(p2-p1).cross(l.p2-p1)<=0;//直線是否交線段
 	}
 	int line_intersect(const line &l)const{//直線相交情況，-1無限多點、1交於一點、0不相交
-		return parallel(l)?(cross(l.p1)==0?-1:0):1;
+		return parallel(l)?(ori(l.p1)==0?-1:0):1;
 	}
 	int seg_intersect(const line &l)const{
-		T c1=cross(l.p1), c2=cross(l.p2);
-		T c3=l.cross(p1), c4=l.cross(p2);
+		T c1=ori(l.p1), c2=ori(l.p2);
+		T c3=l.ori(p1), c4=l.ori(p2);
 		if(c1==0&&c2==0){//共線
-			T a1=btw(l.p1),a2=btw(l.p2);
+			bool b1=btw(l.p1)>=0,b2=btw(l.p2)>=0;
 			T a3=l.btw(p1),a4=l.btw(p2);
-		if(a3==0&&a1>=0&&a2>=0&&a4>=0) return 2;
-		if(a4==0&&a1>=0&&a2>=0&&a3>=0) return 3;
-		if(a1>=0&&a2>=0&&a3>=0&&a4>=0) return 0;
+			if(b1&&b2&&a3==0&&a4>=0) return 2;
+			if(b1&&b2&&a3>=0&&a4==0) return 3;
+			if(b1&&b2&&a3>=0&&a4>=0) return 0;
 			return -1;//無限交點
 		}else if(c1*c2<=0&&c3*c4<=0)return 1;
 		return 0;//不相交
@@ -170,11 +170,11 @@ struct polygon{
 	polygon cut(const line<T> &l)const{//凸包對直線切割，得到直線l左側的凸包
 		polygon ans;
 		for(int n=p.size(),i=n-1,j=0;j<n;i=j++){
-			if(l.cross(p[i])>=0){
+			if(l.ori(p[i])>=0){
 				ans.p.push_back(p[i]); 
-				if(l.cross(p[j])<0)
+				if(l.ori(p[j])<0)
 					ans.p.push_back(l.line_intersection(line<T>(p[i],p[j])));
-			}else if(l.cross(p[j])>0)
+			}else if(l.ori(p[j])>0)
 				ans.p.push_back(l.line_intersection(line<T>(p[i],p[j])));
 		}
 		return ans;
@@ -201,9 +201,8 @@ struct polygon{
 		int n=p.size(),t=1;
 		T ans=0;p.push_back(p[0]);
 		for(int i=0;i<n;i++){
-			point<T> now=p[i+1]-p[i];
-			while(now.cross(p[t+1]-p[i])>now.cross(p[t]-p[i]))t=(t+1)%n;
-			ans=max(ans,max((p[i]-p[t]).abs2(),(p[i+1]-p[t+1]).abs2()));
+			while((p[i]-p[t+1]).abs2()>(p[i]-p[t]).abs2())t=(t+1)%n;
+			ans=max(ans,(p[i]-p[t]).abs2());
 		}
 		return p.pop_back(),ans;
 	}
@@ -263,16 +262,16 @@ struct polygon{
 		vector<line<T> > q(n);
 		q[L=R=0]=s[0];
 		for(int i=1;i<n;++i){
-			while(L<R&&s[i].cross(px[R-1])<=0)--R;
-			while(L<R&&s[i].cross(px[L])<=0)++L;
+			while(L<R&&s[i].ori(px[R-1])<=0)--R;
+			while(L<R&&s[i].ori(px[L])<=0)++L;
 			q[++R]=s[i];
 			if(q[R].parallel(q[R-1])){
 				--R;
-				if(q[R].cross(s[i].p1)>0)q[R]=s[i];
+				if(q[R].ori(s[i].p1)>0)q[R]=s[i];
 			}
 			if(L<R)px[R-1]=q[R-1].line_intersection(q[R]);
 		}
-		while(L<R&&q[L].cross(px[R-1])<=0)--R;
+		while(L<R&&q[L].ori(px[R-1])<=0)--R;
 		p.clear();
 		if(R-L<=1)return 0;
 		px[R]=q[R].line_intersection(q[L]);
