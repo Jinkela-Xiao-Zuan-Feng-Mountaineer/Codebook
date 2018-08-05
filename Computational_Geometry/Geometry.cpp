@@ -201,7 +201,8 @@ struct polygon{
 		int n=p.size(),t=1;
 		T ans=0;p.push_back(p[0]);
 		for(int i=0;i<n;i++){
-			while((p[i]-p[t+1]).abs2()>(p[i]-p[t]).abs2())t=(t+1)%n;
+			point<T> now=p[i+1]-p[i];
+			while(now.cross(p[t+1]-p[i])>now.cross(p[t]-p[i]))t=(t+1)%n;
 			ans=max(ans,(p[i]-p[t]).abs2());
 		}
 		return p.pop_back(),ans;
