@@ -1,0 +1,20 @@
+os:
+  - linux
+
+language: cpp
+
+sudo: false
+
+env:
+  
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-7
+
+script:
+  - g++-7 -std=c++14 -O2 GenCodebookList.cpp -o GenCodebookList
+  - ./GenCodebookList
+
