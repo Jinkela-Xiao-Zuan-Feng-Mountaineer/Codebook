@@ -1,23 +1,23 @@
-#include<cstdint>//for DBL_MAX
-int dp[maxN+1][maxN+1];
-double mnc(int n){
-	int u,v,w;
-	const int inf=0x7f7f7f7f;
-	memset(dp,0x7f,sizeof(dp));
-	memset(dp[0],0,sizeof(dp[0]));
-	for(int i=0;i<n;++i){
-		for(auto e:E){
-			tie(u,v,w)=e;
-			if(dp[i][u]!=inf)
-			dp[i+1][v]=min(dp[i+1][v],dp[i][u]+w);
+#include<cfloat> //for DBL_MAX
+int dp[MAXN][MAXN]; // 1-base,O(NM)
+vector<tuple<int,int,int>> edge;
+double mmc(int n){//allow negative weight
+	const int INF=0x3f3f3f3f;
+	for(int t=0;t<n;++t){
+		memset(dp[t+1],0x3f,sizeof(dp[t+1]));
+		for(const auto &e:edge){
+			int u,v,w;
+			tie(u,v,w) = e;
+			dp[t+1][v]=min(dp[t+1][v],dp[t][u]+w);
 		}
-		double res = DBL_MAX;
-		for(int i=1;i<=n;++i){
-			double val = DBL_MIN;
-			for(int j=0;j<n;++j)
-				val=max(val,double(dp[n][i]-dp[i][j])/(n-j));
-			res=min(res,val);
-		}
+	}
+	double res = DBL_MAX;
+	for(int u=1;u<=n;++u){
+		if(dp[n][u]==INF) continue;
+		double val = -DBL_MAX;
+		for(int t=0;t<n;++t)
+			val=max(val,(dp[n][u]-dp[t][u])*1.0/(n-t));
+		res=min(res,val);
 	}
 	return res;
 }
