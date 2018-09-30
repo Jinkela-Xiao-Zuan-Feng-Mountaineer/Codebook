@@ -1,9 +1,7 @@
-﻿/*kd樹代替高維線段樹*/
-struct node{
+﻿struct node{//kd樹代替高維線段樹
 	node *l,*r;
 	point pid,mi,ma;
-	int s;
-	int data;
+	int s, data;
 	node(const point &p,int d):l(0),r(0),pid(p),mi(p),ma(p),s(1),data(d),dmin(d),dmax(d){}
 	void up(){
 		mi=ma=pid;
@@ -23,35 +21,29 @@ struct node{
 			s+=r->s;
 		}
 	}
-	void up2(){
-		//其他懶惰標記向上更新 
-	}
-	void down(){
-		//其他懶惰標記下推 
-	}
+	void up2(){/*其他懶惰標記向上更新*/}
+	void down(){/*其他懶惰標記下推*/}
 }*root;
-
-/*檢查區間包含用的函數*/
-inline bool range_include(node *o,const point &L,const point &R){
+//檢查區間包含用的函數
+bool range_include(node *o,const point &L,const point &R){
 	for(int i=0;i<kd;++i){ 
 		if(L.d[i]>o->ma.d[i]||R.d[i]<o->mi.d[i])return 0;
-	}//只要(L,R)區間有和o的區間有交集就回傳true
+	}//(L,R)區間有和o的區間有交集就回傳true
 	return 1;
 }
-inline bool range_in_range(node *o,const point &L,const point &R){
+bool range_in_range(node *o,const point &L,const point &R){
 	for(int i=0;i<kd;++i){
 		if(L.d[i]>o->mi.d[i]||o->ma.d[i]>R.d[i])return 0;
-	}//如果(L,R)區間完全包含o的區間就回傳true
+	}//(L,R)區間完全包含o的區間就回傳true
 	return 1;
 }
-inline bool point_in_range(node *o,const point &L,const point &R){
+bool point_in_range(node *o,const point &L,const point &R){
 	for(int i=0;i<kd;++i){
 		if(L.d[i]>o->pid.d[i]||R.d[i]<o->pid.d[i])return 0;
-	}//如果(L,R)區間完全包含o->pid這個點就回傳true
+	}//(L,R)區間完全包含o->pid這個點就回傳true
 	return 1;
 }
-
-/*單點修改，以單點改值為例*/
+//單點修改，以單點改值為例
 void update(node *u,const point &x,int data,int k=0){
 	if(!u)return;
 	u->down();
@@ -64,8 +56,7 @@ void update(node *u,const point &x,int data,int k=0){
 	update(cmp(x,u->pid)?u->l:u->r,x,data,(k+1)%kd);
 	u->up2();
 }
-
-/*區間修改*/ 
+//區間修改
 void update(node *o,const point &L,const point &R,int data){
 	if(!o)return;
 	o->down();
@@ -76,14 +67,13 @@ void update(node *o,const point &L,const point &R,int data){
 	}
 	if(point_in_range(o,L,R)){
 		//這個點在(L,R)區間，但是他的左右子樹不一定在區間中
-		//單點懶惰標記修改 
+		//單點懶惰標記修改
 	}
 	if(o->l&&range_include(o->l,L,R))update(o->l,L,R,data);
 	if(o->r&&range_include(o->r,L,R))update(o->r,L,R,data);
 	o->up2();
 }
-
-/*區間查詢，以總和為例*/ 
+//區間查詢，以總和為例
 int query(node *o,const point &L,const point &R){
 	if(!o)return 0;
 	o->down();
