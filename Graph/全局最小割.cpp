@@ -25,7 +25,8 @@ struct stoer_wagner{// 0-base
 				}
 				swap(nd[ind],nd[i]);
 			}
-			if(ans>dis[nd[ind]])ans=dis[t=nd[ind]],s=nd[ind-1];
+			if(ans>dis[nd[ind]])
+				ans=dis[t=nd[ind]],s=nd[ind-1];
 			for(int i=0;i<tn;++i)
 				g[nd[ind-1]][nd[i]]=g[nd[i]][nd[ind-1]]+=g[nd[i]][nd[ind]];
 		}
