@@ -41,10 +41,12 @@ struct line{
 		b=p2.x-p1.x;
 		c=-a*p1.x-b*p1.y;
 	}
-	T ori(const point<T> &p)const{//點和有向直線的關係，>0左邊、=0在線上<0右邊
+	T ori(const point<T> &p)const{
+//點和有向直線的關係，>0左邊、=0在線上<0右邊
 		return (p2-p1).cross(p-p1);
 	}
-	T btw(const point<T> &p)const{//點投影落在線段上<=0 
+	T btw(const point<T> &p)const{
+		//點投影落在線段上<=0 
 		return (p1-p).dot(p2-p);
 	}
 	bool point_on_segment(const point<T>&p)const{//點是否在線段上
@@ -60,7 +62,8 @@ struct line{
 		T tmp=v.cross(v1);
 		return tmp*tmp/v.abs2();
 	}
-	T seg_dis2(const line<T> &l)const{//兩線段距離平方 
+	T seg_dis2(const line<T> &l)const{
+		//兩線段距離平方 
 		return min({dis2(l.p1,1),dis2(l.p2,1),l.dis2(p1,1),l.dis2(p2,1)});
 	}
 	point<T> projection(const point<T> &p)const{//點對直線的投影
@@ -84,7 +87,8 @@ struct line{
 	bool cross_seg(const line &l)const{
 		return (p2-p1).cross(l.p1-p1)*(p2-p1).cross(l.p2-p1)<=0;//直線是否交線段
 	}
-	int line_intersect(const line &l)const{//直線相交情況，-1無限多點、1交於一點、0不相交
+	int line_intersect(const line &l)const{
+//直線相交情況，-1無限多點、1交於一點、0不相交
 		return parallel(l)?(ori(l.p1)==0?-1:0):1;
 	}
 	int seg_intersect(const line &l)const{
@@ -133,7 +137,8 @@ struct polygon{
 		}
 		return point<T>(cx/3/w,cy/3/w);
 	}
-	char ahas(const point<T>& t)const{//點是否在簡單多邊形內，是的話回傳1、在邊上回傳-1、否則回傳0 
+	char ahas(const point<T>& t)const{
+//點是否在簡單多邊形內，是的話回傳1、在邊上回傳-1、否則回傳0 
 		bool c=0;
 		for(int i=0,j=p.size()-1;i<p.size();j=i++)
 			if(line<T>(p[i],p[j]).point_on_segment(t))return -1;
@@ -167,7 +172,8 @@ struct polygon{
 		int f2=upper_bound(A.begin(),A.end(),(l.p2-l.p1).getA())-A.begin();
 		return l.cross_seg(line<T>(p[f1],p[f2]));
 	}
-	polygon cut(const line<T> &l)const{//凸包對直線切割，得到直線l左側的凸包
+	polygon cut(const line<T> &l)const{
+	//凸包對直線切割，得到直線l左側的凸包
 		polygon ans;
 		for(int n=p.size(),i=n-1,j=0;j<n;i=j++){
 			if(l.ori(p[i])>=0){
@@ -213,10 +219,10 @@ struct polygon{
 		T ans=1e99;p.push_back(p[0]);
 		for(int i=0;i<n;i++){
 			point<T> now=p[i+1]-p[i];
-			while(now.cross(p[t+1]-p[i])>now.cross(p[t]-p[i]))t=(t+1)%n;
-			while(now.dot(p[r+1]-p[i])>now.dot(p[r]-p[i]))r=(r+1)%n;
+			while(now.cross(p[t+1]-p[i])>now.cross(p[t]-p[i])) t=(t+1)%n;
+			while(now.dot(p[r+1]-p[i])>now.dot(p[r]-p[i])) r=(r+1)%n;
 			if(!i)l=r;
-			while(now.dot(p[l+1]-p[i])<=now.dot(p[l]-p[i]))l=(l+1)%n;
+			while(now.dot(p[l+1]-p[i])<=now.dot(p[l]-p[i])) l=(l+1)%n;
 			T d=now.abs2();
 			T tmp=now.cross(p[t]-p[i])*(now.dot(p[r]-p[i])-now.dot(p[l]-p[i]))/d;
 			ans=min(ans,tmp);
@@ -243,7 +249,7 @@ struct polygon{
 		P.push_back(P[0]),Q.push_back(Q[0]);
 		T ans=1e99;
 		for(int i=0;i<n;++i){
-			while((P[l]-P[l+1]).cross(Q[r+1]-Q[r])<0)r=(r+1)%m;
+			while((P[l]-P[l+1]).cross(Q[r+1]-Q[r])<0) r=(r+1)%m;
 			ans=min(ans,line<T>(P[l],P[l+1]).seg_dis2(line<T>(Q[r],Q[r+1])));
 			l=(l+1)%n;
 		}
@@ -313,6 +319,7 @@ struct point3D{
 	T x,y,z;
 	point3D(){}
 	point3D(const T&x,const T&y,const T&z):x(x),y(y),z(z){}
+	
 	point3D operator+(const point3D &b)const{
 		return point3D(x+b.x,y+b.y,z+b.z);}
 	point3D operator-(const point3D &b)const{
@@ -329,7 +336,8 @@ struct point3D{
 		return point3D(y*b.z-z*b.y,z*b.x-x*b.z,x*b.y-y*b.x);}
 	T abs2()const{//向量長度的平方
 		return dot(*this);}
-	T area2(const point3D &b)const{//和b、原點圍成面積的平方 
+	T area2(const point3D &b)const{
+		//和b、原點圍成面積的平方 
 		return cross(b).abs2()/4;}
 };
 template<typename T>
@@ -366,7 +374,8 @@ struct plane{
 	point3D<T> p0,n;//平面上的點和法向量 
 	plane(){}
 	plane(const point3D<T> &p0,const point3D<T> &n):p0(p0),n(n){}
-	T dis2(const point3D<T> &p)const{//點到平面距離的平方 
+	T dis2(const point3D<T> &p)const{
+		//點到平面距離的平方 
 		T tmp=(p-p0).dot(n);
 		return tmp*tmp/n.abs2();
 	}
@@ -389,7 +398,8 @@ struct triangle3D{
 	point3D<T> a,b,c;
 	triangle3D(){}
 	triangle3D(const point3D<T> &a,const point3D<T> &b,const point3D<T> &c):a(a),b(b),c(c){}
-	bool point_in(const point3D<T> &p)const{//點在該平面上的投影在三角形中 
+	bool point_in(const point3D<T> &p)const{
+		//點在該平面上的投影在三角形中 
 		return line3D<T>(b,c).same_side(p,a)&&line3D<T>(a,c).same_side(p,b)&&line3D<T>(a,b).same_side(p,c);
 	}
 };

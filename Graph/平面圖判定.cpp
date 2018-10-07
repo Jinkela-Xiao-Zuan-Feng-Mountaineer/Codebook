@@ -50,5 +50,5 @@ bool isHomeomorphic(bool G[MAXN][MAXN], const int n){
 			++degree[j];
 		}
 	}
-	return  !(isK33(n, degree) || isK5(n, degree));
+	return !(isK33(n,degree)||isK5(n,degree));
 }

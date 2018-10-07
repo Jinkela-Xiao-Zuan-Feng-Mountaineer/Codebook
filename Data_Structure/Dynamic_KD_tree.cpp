@@ -37,7 +37,8 @@ private:
 			if(x.d[sort_id]!=y.d[sort_id])
 				return x.d[sort_id]<y.d[sort_id];
 			for(size_t i=0;i<kd;++i)
-				if(x.d[i]!=y.d[i])return x.d[i]<y.d[i];
+				if(x.d[i]!=y.d[i])
+					return x.d[i]<y.d[i];
 			return 0;
 		}
 	}cmp;

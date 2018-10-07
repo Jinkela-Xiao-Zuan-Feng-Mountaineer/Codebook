@@ -23,7 +23,8 @@ struct DLX{
 		else R[sz]=R[H[r]],L[R[H[r]]]=sz,L[sz]=H[r],R[H[r]]=sz;
 	}
 	#define DFOR(i,A,s) for(int i=A[s];i!=s;i=A[i])
-	void remove(int c){//刪除第c行和所有當前覆蓋到第c行的列 
+	void remove(int c){
+		//刪除第c行和所有當前覆蓋到第c行的列 
 		L[R[c]]=L[c],R[L[c]]=R[c];//這裡刪除第c行，若有些行不需要處理可以在開始時呼叫他 
 		DFOR(i,D,c)DFOR(j,R,i){U[D[j]]=U[j],D[U[j]]=D[j],--S[col[j]];}
 	}
