@@ -1,6 +1,6 @@
 const int MAXN=100000; // 1-base
 const int MLG=17; //log2(MAXN)+1;
-int pa[MLG+1][MAXN+5];
+int pa[MLG+2][MAXN+5];
 int dep[MAXN+5];
 vector<int> G[MAXN+5];
 void dfs(int x,int p=0){//dfs(root);
