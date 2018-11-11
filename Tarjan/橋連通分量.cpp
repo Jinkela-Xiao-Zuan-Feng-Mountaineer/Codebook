@@ -9,18 +9,18 @@ vector<int> G[N];// 1-base
 int low[N],vis[N],Time;
 int bcc_id[N],bridge_cnt,bcc_cnt;// 1-base
 int st[N],top;//BCC用 
-inline void add_edge(int u,int v){
+void add_edge(int u,int v){
 	G[u].push_back(E.size());
-	E.push_back(edge(u,v));
+	E.emplace_back(u,v);
 	G[v].push_back(E.size());
-	E.push_back(edge(v,u));
+	E.emplace_back(v,u);
 }
 void dfs(int u,int re=-1){//u當前點，re為u連接前一個點的邊 
 	int v;
 	low[u]=vis[u]=++Time;
 	st[top++]=u;
-	for(size_t i=0;i<G[u].size();++i){
-		int e=G[u][i];v=E[e].v;
+	for(int e:G[u]){
+		v=E[e].v;
 		if(!vis[v]){
 			dfs(v,e^1);//e^1反向邊 
 			low[u]=min(low[u],low[v]);
@@ -37,7 +37,7 @@ void dfs(int u,int re=-1){//u當前點，re為u連接前一個點的邊
 		while(v!=u);
 	}
 }
-inline void bcc_init(int n){
+void bcc_init(int n){
 	Time=bcc_cnt=bridge_cnt=top=0;
 	E.clear();
 	for(int i=1;i<=n;++i){

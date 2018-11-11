@@ -1,8 +1,8 @@
 /*target:
 	max \sum_{j=1}^n A_{0,j}*x_j
 condition:
-	\sum_{j=1}^n A_{i,j}*x_j = A_{i,0} | i=1~m
-	x_j >= 0 | j=1~n
+	\sum_{j=1}^n A_{i,j}*x_j <= A_{i,0} |i=1~m
+	x_j >= 0 |j=1~n
 VDB = vector<double>*/
 template<class VDB>
 VDB simplex(int m,int n,vector<VDB> a){

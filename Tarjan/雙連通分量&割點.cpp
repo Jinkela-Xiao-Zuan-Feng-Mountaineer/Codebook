@@ -6,17 +6,16 @@ int bcc_id[N],bcc_cnt;// 1-base
 bool is_cut[N];//是否為割點
 int st[N],top;
 void dfs(int u,int pa=-1){//u當前點，pa父親 
-	int v,child=0;
+	int t, child=0;
 	low[u]=vis[u]=++Time;
 	st[top++]=u;
-	for(size_t i=0;i<G[u].size();++i){
-		if(!vis[v=G[u][i]]){
+	for(int v:G[u]){
+		if(!vis[v]){
 			dfs(v,u),++child;
 			low[u]=min(low[u],low[v]);
 			if(vis[u]<=low[v]){
 				is_cut[u]=1;
 				bcc[++bcc_cnt].clear();
-				int t;
 				do{
 					bcc_id[t=st[--top]]=bcc_cnt;
 					bcc[bcc_cnt].push_back(t);
@@ -25,11 +24,11 @@ void dfs(int u,int pa=-1){//u當前點，pa父親
 				bcc[bcc_cnt].push_back(u);
 			}
 		}else if(vis[v]<vis[u]&&v!=pa)//反向邊 
-			low[u]=min(low[u],vis[v]);
-	}
-	if(pa==-1&&child<2)is_cut[u]=0;//u是dfs樹的根要特判
+			low[u] = min(low[u],vis[v]);
+	}//u是dfs樹的根要特判
+	if(pa==-1&&child<2)is_cut[u]=0;
 }
-inline void bcc_init(int n){
+void bcc_init(int n){
 	Time=bcc_cnt=top=0;
 	for(int i=1;i<=n;++i){
 		G[i].clear();

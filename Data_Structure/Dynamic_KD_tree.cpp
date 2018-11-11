@@ -4,7 +4,7 @@ struct kd_tree{
 		T d[kd];
 		T dist(const point &x)const{
 			T ret=0;
-			for(size_t i=0;i<kd;++i)ret+=std::abs(d[i]-x.d[i]);
+			for(size_t i=0;i<kd;++i)ret+=abs(d[i]-x.d[i]);
 			return ret;
 		}
 		bool operator==(const point &p){
@@ -42,13 +42,13 @@ private:
 		}
 	}cmp;
 	int size(node *o){return o?o->s:0;}
-	std::vector<node*> A;
+	vector<node*> A;
 	node* build(int k,int l,int r){
 		if(l>r) return 0;
 		if(k==kd) k=0;
 		int mid=(l+r)/2;
 		cmp.sort_id = k;
-		std::nth_element(A.begin()+l,A.begin()+mid,A.begin()+r+1,cmp);
+		nth_element(A.begin()+l,A.begin()+mid,A.begin()+r+1,cmp);
 		node *ret=A[mid];
 		ret->l = build(k+1,l,mid-1);
 		ret->r = build(k+1,mid+1,r);
@@ -58,7 +58,7 @@ private:
 	bool isbad(node*o){
 		return size(o->l)>alpha*o->s||size(o->r)>alpha*o->s;
 	}
-	void flatten(node *u,typename std::vector<node*>::iterator &it){
+	void flatten(node *u,typename vector<node*>::iterator &it){
 		if(!u)return;
 		flatten(u->l,it);
 		*it=u;
@@ -66,7 +66,7 @@ private:
 	}
 	void rebuild(node*&u,int k){
 		if((int)A.size()<u->s)A.resize(u->s);
-		typename std::vector<node*>::iterator it=A.begin();
+		auto it=A.begin();
 		flatten(u,it);
 		u=build(k,0,u->s-1);
 	}
@@ -96,10 +96,7 @@ private:
 		if(u->pid==x){
 			if(u->r);
 			else if(u->l) u->r=u->l, u->l=0;
-			else{
-				delete u;
-				return u=0, 1;
-			}
+			else return delete(u),u=0, 1;
 			--u->s;
 			cmp.sort_id=k;
 			u->pid=findmin(u->r,(k+1)%kd)->pid;
@@ -116,7 +113,7 @@ private:
 		return ret;
 	}
 	int qM;
-	std::priority_queue<std::pair<T,point > >pQ;
+	priority_queue<pair<T,point>> pQ;
 	void nearest(node *u,int k,const point &x,T *h,T &mndist){
 		if(u==0||heuristic(h)>=mndist)return;
 		T dist=u->pid.dist(x),old=h[k];
@@ -128,29 +125,29 @@ private:
 		}
 		if(x.d[k]<u->pid.d[k]){
 			nearest(u->l,(k+1)%kd,x,h,mndist);
-			h[k]=std::abs(x.d[k]-u->pid.d[k]);
+			h[k] = abs(x.d[k]-u->pid.d[k]);
 			nearest(u->r,(k+1)%kd,x,h,mndist);
 		}else{
 			nearest(u->r,(k+1)%kd,x,h,mndist);
-			h[k]=std::abs(x.d[k]-u->pid.d[k]);
+			h[k] = abs(x.d[k]-u->pid.d[k]);
 			nearest(u->l,(k+1)%kd,x,h,mndist);
 		}
 		h[k]=old;
 	}
-	std::vector<point>in_range;
+	vector<point>in_range;
 	void range(node *u,int k,const point&mi,const point&ma){
 		if(!u)return;
 		bool is=1;
 		for(int i=0;i<kd;++i)
-			if(u->pid.d[i]<mi.d[i]||ma.d[i]<u->pid.d[i]){
-				is=0;break;
-			}
-		if(is)in_range.push_back(u->pid);
+			if(u->pid.d[i]<mi.d[i]||ma.d[i]<u->pid.d[i])
+				{ is=0;break; }
+		if(is) in_range.push_back(u->pid);
 		if(mi.d[k]<=u->pid.d[k])range(u->l,(k+1)%kd,mi,ma);
 		if(ma.d[k]>=u->pid.d[k])range(u->r,(k+1)%kd,mi,ma);
 	}
 public:
-	kd_tree(const T &INF,double a=0.75):root(0),alpha(a),loga(log2(1.0/a)),INF(INF),maxn(1){}
+	kd_tree(const T &INF,double a=0.75):
+	root(0),alpha(a),loga(log2(1.0/a)),INF(INF),maxn(1){}
 	~kd_tree(){delete root;}
 	void clear(){delete root,root=0,maxn=1;}
 	void build(int n,const point *p){
@@ -176,10 +173,10 @@ public:
 		T mndist=INF,h[kd]={};
 		nearest(root,0,x,h,mndist);
 		mndist=pQ.top().first;
-		pQ=std::priority_queue<std::pair<T,point > >();
+		pQ = priority_queue<pair<T,point>>();
 		return mndist;//回傳離x第k近的點的距離 
 	}
-	const std::vector<point> &range(const point&mi,const point&ma){
+	const vector<point> &range(const point&mi,const point&ma){
 		in_range.clear();
 		range(root,0,mi,ma);
 		return in_range;//回傳介於mi到ma之間的點vector 
