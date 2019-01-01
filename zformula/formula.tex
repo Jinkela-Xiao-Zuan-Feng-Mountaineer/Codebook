@@ -8,8 +8,7 @@
 
 \subsubsection{圖論}
 \begin{enumerate}\itemsep = -5pt
-\item $V-E+F=2$
-\item 對於平面圖，$F=E-V+n+1$，n是連通分量
+\item 對於平面圖，$F=E-V+C+1$，C是連通分量數
 \item 對於平面圖，$E\leq 3V-6$
 \item 對於連通圖G，最大獨立點集的大小設為I(G)，最大匹配大小設為M(G)，最小點覆蓋設為Cv(G)，最小邊覆蓋設為Ce(G)。
 對於任意連通圖：
@@ -24,18 +23,26 @@
 	\end{enumerate}
 \item 最大權閉合圖：
 	\begin{enumerate}\itemsep = -3pt
-	\item $C(u,V)=\infty ,(u,v)\in E$
+	\item $C(u,v)=\infty ,(u,v)\in E$
 	\item $C(S,v)=W_v ,W_v>0$
 	\item $C(v,T)=-W_v ,W_v<0$
+	\item ans=$\sum_{W_v>0} W_v-flow(S,T)$
 	\end{enumerate}
 \item 最大密度子圖：
-	\begin{enumerate}\itemsep = -3pt
-	\item $C(u,v)=1 ,(u,v)\in E$
-	\item $C(S,v)=U_v ,v \in V$
-	\item $C(v,T)=U+2g-d_v ,v \in V$
+	\begin{enumerate}\itemsep = -1pt
+	\item 求$max\left(\frac{W_e+W_v}{|V'|}\right),e \in E',v \in V'$
+	\item $U=\sum_{v \in V}2W_v+\sum_{e \in E} W_e$
+	\item $C(u,v)=W_{(u,v)} ,(u,v)\in E$，雙向邊
+	\item $C(S,v)=U ,v \in V$
+	\item $D_u=\sum_{(u,v) \in E} W_{(u,v)}$
+	\item $C(v,T)=U+2g-D_v-2W_v ,v \in V$
+	\item 二分搜$g$：\\$l=0,r=U,eps=1/n^2$\\if($(U\times|V|-flow(S,T))/2>0$) $l=mid$\\else $r=mid$
+	\item ans=$min\_cut(S,T)$
+	\item $|E|=0$要特殊判斷
 	\end{enumerate}
 \item 弦圖：
 	\begin{enumerate}\itemsep = -3pt
+	\item 點數大於3的環都要有一條弦
 	\item 完美消除序列從後往前依次給每個點染色，給每個點染上可以染的最小顏色
 	\item 最大團大小=色數
 	\item 最大獨立集:完美消除序列從前往後能選就選
@@ -45,20 +52,46 @@
 	\item 區間圖染色:用線段樹做
 	\end{enumerate}
 \end{enumerate}
-\begin{lstlisting}[language=C++]
-double l=0,=m,stop=1.0/n/n;
-while(r-l>=stop){
-	double(mid);
-	if((n*m-sol.maxFlow(s,t))/2>eps)l=mid;
-	else r=mid;
-}
-build(l);
-sol.maxFlow(s,t);
-vector<int> ans;
-for(int i=1;i<=n;++i)
-	if(sol.vis[i])ans.push_back(i);
-\end{lstlisting}
+\subsubsection{dinic特殊圖複雜度}
+\begin{enumerate}\itemsep = -5pt
+\item 單位流：$O\left(min\left(V^{3/2},E^{1/2}\right)E\right)$
+\item 二分圖：$O\left(V^{1/2}E\right)$
+\end{enumerate}
 
+\subsubsection{0-1分數規劃}
+$x_i=\{0,1\}$，$x_i$可能會有其他限制，求$max\left(\frac{\sum B_ix_i}{\sum C_ix_i}\right)$
+\begin{enumerate}\itemsep = -1pt
+\item $D(i,g)=B_i-g\times C_i$
+\item $f(g)=\sum D(i,g)x_i$
+\item $f(g)=0$時$g$為最佳解，$f(g)<0$沒有意義
+\item 因為$f(g)$單調可以二分搜$g$
+\item 或用Dinkelbach通常比較快
+\end{enumerate}
+\begin{lstlisting}[language=C++]
+binary_search(){
+	while(r-l>eps){
+		g=(l+r)/2;
+		for(i:所有元素)D[i]=B[i]-g*C[i];//D(i,g) 
+		找出一組合法x[i]使f(g)最大;
+		if(f(g)>0) l=g;
+		else r=g;
+	}
+	Ans = r;
+}
+Dinkelbach(){
+	g=任意狀態(通常設為0);
+	do{
+		Ans=g;
+		for(i:所有元素)D[i]=B[i]-g*C[i];//D(i,g) 
+		找出一組合法x[i]使f(g)最大;
+		p=0,q=0;
+		for(i:所有元素)
+			if(x[i])p+=B[i],q+=C[i];
+		g=p/q;//更新解，注意q=0的情況 
+	}while(abs(Ans-g)>EPS);
+	return Ans;
+}
+\end{lstlisting}
 
 \subsubsection{學長公式}
 \begin{enumerate}\itemsep = -3pt

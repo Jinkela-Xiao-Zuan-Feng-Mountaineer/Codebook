@@ -223,18 +223,6 @@ struct polygon{
 		}
 		return p.pop_back(),ans;
 	}
-	T max_triangle(){//最大內接三角形 
-		int n=p.size(),a=1,b=2;
-		if(n<3)return 0;
-		T ans=0,tmp;p.push_back(p[0]);
-		for(int i=0;i<n;++i){
-			while((p[a]-p[i]).cross(p[b+1]-p[i])>(tmp=(p[a]-p[i]).cross(p[b]-p[i])))b=(b+1)%n;
-			ans=max(ans,tmp);
-			while((p[a+1]-p[i]).cross(p[b]-p[i])>(tmp=(p[a]-p[i]).cross(p[b]-p[i])))a=(a+1)%n;
-			ans=max(ans,tmp);
-		}
-		return p.pop_back(),ans/2;
-	}
 	T dis2(polygon &pl){//凸包最近距離平方
 		vector<point<T> > &P=p,&Q=pl.p;
 		int n=P.size(),m=Q.size(),l=0,r=0;
