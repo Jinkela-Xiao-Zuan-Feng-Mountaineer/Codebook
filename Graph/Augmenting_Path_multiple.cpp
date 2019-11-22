@@ -1,9 +1,12 @@
 #define MAXN1 1005
 #define MAXN2 505
-int n1,n2;//n1個點連向n2個點，其中n2個點可以匹配很多邊 
+int n1,n2;
+//n1個點連向n2個點，其中n2個點可以匹配很多邊 
 vector<int> g[MAXN1];//圖 0-base
-size_t c[MAXN2];//每個屬於n2點最多可以接受幾條匹配邊 
-vector<int> matchs[MAXN2];//每個屬於n2的點匹配了那些點 
+size_t c[MAXN2];
+//每個屬於n2點最多可以接受幾條匹配邊 
+vector<int> matchs[MAXN2];
+//每個屬於n2的點匹配了那些點 
 bool vis[MAXN2];
 bool dfs(int u){
 	for(int v:g[u]){

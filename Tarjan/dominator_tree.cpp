@@ -1,58 +1,57 @@
 struct dominator_tree{
 	static const int MAXN=5005;
 	int n;// 1-base
-	vector<int> suc[MAXN],pre[MAXN];
-	int fa[MAXN],dfn[MAXN],id[MAXN],Time;
-	int semi[MAXN],idom[MAXN];
-	int anc[MAXN],best[MAXN];//disjoint set 
-	vector<int> dom[MAXN];//dominator_tree
+	vector<int> G[MAXN], rG[MAXN];
+	int pa[MAXN], dfn[MAXN], id[MAXN], dfnCnt;
+	int semi[MAXN], idom[MAXN], best[MAXN];
+	vector<int> tree[MAXN]; // tree here
 	void init(int _n){
-		n=_n;
-		for(int i=1;i<=n;++i)suc[i].clear(),pre[i].clear();
+		n = _n;
+		for(int i=1; i<=n; ++i)
+			G[i].clear(), rG[i].clear();
 	}
-	void add_edge(int u,int v){
-		suc[u].push_back(v);
-		pre[v].push_back(u);
+	void add_edge(int u, int v){
+		G[u].push_back(v);
+		rG[v].push_back(u);
 	}
 	void dfs(int u){
-		dfn[u]=++Time,id[Time]=u;
-		for(auto v:suc[u]){
-			if(dfn[v])continue;
-			dfs(v),fa[dfn[v]]=dfn[u];
-		}
+		id[dfn[u]=++dfnCnt]=u;
+		for(auto v:G[u]) if(!dfn[v])
+			dfs(v),pa[dfn[v]]=dfn[u];
 	}
-	int find(int x){
-		if(x==anc[x])return x;
-		int y=find(anc[x]);
-		if(semi[best[x]]>semi[best[anc[x]]])best[x]=best[anc[x]];
-		return anc[x]=y;
+	int find(int y,int x){
+		if(y <= x) return y;
+		int tmp = find(pa[y],x);
+		if(semi[best[y]] > semi[best[pa[y]]])
+			best[y] = best[pa[y]];
+		return pa[y] = tmp;
 	}
-	void tarjan(int r){
-		Time=0;
-		for(int t=1;t<=n;++t){
-			dfn[t]=idom[t]=0;//u=r或是u無法到達r時idom[id[u]]=0 
-			dom[t].clear();
-			anc[t]=best[t]=semi[t]=t;
+	void tarjan(int root){
+		dfnCnt = 0;
+		for(int i=1; i<=n; ++i){
+			dfn[i] = idom[i] = 0;
+			tree[i].clear();
+			best[i] = semi[i] = i;
 		}
-		dfs(r);
-		for(int y=Time;y>=2;--y){
-			int x=fa[y],idy=id[y];
-			for(auto z:pre[idy]){
-				if(!(z=dfn[z]))continue;
-				find(z);
-				semi[y]=min(semi[y],semi[best[z]]);
+		dfs(root);
+		for(int i=dfnCnt; i>1; --i){
+			int u = id[i];
+			for(auto v:rG[u]) if(v=dfn[v]){
+				find(v,i);
+				semi[i]=min(semi[i],semi[best[v]]);
 			}
-			dom[semi[y]].push_back(y);
-			anc[y]=x;
-			for(auto z:dom[x]){
-				find(z);
-				idom[z]=semi[best[z]]<x?best[z]:x;
+			tree[semi[i]].push_back(i);
+			for(auto v:tree[pa[i]]){
+				find(v, pa[i]);
+				idom[v] = semi[best[v]]==pa[i]
+						? pa[i] : best[v];
 			}
-			dom[x].clear();
+			tree[pa[i]].clear();
 		}
-		for(int u=2;u<=Time;++u){
-			if(idom[u]!=semi[u])idom[u]=idom[idom[u]];
-			dom[id[idom[u]]].push_back(id[u]);
+		for(int i=2; i<=dfnCnt; ++i){
+			if(idom[i] != semi[i])
+				idom[i] = idom[idom[i]];
+			tree[id[idom[i]]].push_back(id[i]);
 		}
 	}
 }dom;
