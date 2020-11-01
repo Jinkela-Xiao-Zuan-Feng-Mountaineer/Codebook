@@ -1,20 +1,12 @@
 os:
   - linux
 
-language: cpp
+language: python
 
 sudo: false
 
-env:
-  
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-7
+python:
+  - "3.8"
 
 script:
-  - g++-7 -std=c++14 -O2 GenCodebookList.cpp -o GenCodebookList
-  - ./GenCodebookList
-
+  - python GenCodebookList.py

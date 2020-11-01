@@ -12,8 +12,7 @@ $ git clone https://github.com/Jinkela-Xiao-Zuan-Feng-Mountaineer/Codebook.git
 ~~~
 $ cd Codebook
 $ python GenCodebookList.py
-$ xelatex Codebook.tex
-$ xelatex Codebook.tex
+$ xelatex Codebook.tex && xelatex Codebook.tex
 ~~~
 
 ### 1.1. Dependencies
