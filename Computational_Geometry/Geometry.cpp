@@ -179,11 +179,11 @@ struct polygon{
 		}
 		return ans;
 	}
-	static bool graham_cmp(const point<T>& a,const point<T>& b){//凸包排序函數
+	static bool monotone_chain_cmp(const point<T>& a,const point<T>& b){//凸包排序函數
 		return (a.x<b.x)||(a.x==b.x&&a.y<b.y);
 	}
-	void graham(vector<point<T> > &s){//凸包
-		sort(s.begin(),s.end(),graham_cmp);
+	void monotone_chain(vector<point<T> > &s){//凸包
+		sort(s.begin(),s.end(),monotone_chain_cmp);
 		p.resize(s.size()+1);
 		int m=0;
 		for(size_t i=0;i<s.size();++i){

@@ -1,4 +1,4 @@
-LL LLmul(LL a, LL b, const LL &mod) {
+ULL LLmul(ULL a, ULL b, const ULL &mod) {
 	LL ans=0;
 	while(b) {
 		if(b&1) {
@@ -10,10 +10,10 @@ LL LLmul(LL a, LL b, const LL &mod) {
 	}
 	return ans;
 }
-LL mod_mul(LL a,LL b,LL m){
+ULL mod_mul(ULL a,ULL b,ULL m){
 	a%=m,b%=m;/* fast for m < 2^58 */
-	LL y=(LL)((double)a*b/m+0.5);
-	LL r=(a*b-y*m)%m;
+	ULL y=(ULL)((double)a*b/m+0.5);
+	ULL r=(a*b-y*m)%m;
 	return r<0?r+m:r;
 }
 template<typename T>
