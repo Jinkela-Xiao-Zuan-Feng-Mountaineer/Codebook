@@ -9,6 +9,7 @@ splitter = '\\' if sys.platform == "win32" else '/'
 
 RequireOptionDict = {
     ".cpp": "includecpp",
+    ".py": "includepy",
     ".tex": "includetex"
 }
 
@@ -30,7 +31,7 @@ def PrepareFileDict(CurPath):
         for filename in files:
             fullpath = join(root, filename)
             name, file_extension = splitext(filename)
-            if file_extension != ".cpp" and file_extension != ".tex":
+            if file_extension not in RequireOptionDict:
                 continue
             if fullpath[0:3] == "." + splitter + ".":
                 continue
