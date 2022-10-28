@@ -19,6 +19,17 @@ $ python build.py
 * python (version >= 3.0)
 * xelatex (latest version)
 
+#### 1.1.1 Install xelatex
+
+##### For Linux
+```bash
+apt install texlive-xetex
+```
+
+##### For Windows
+Install MiKTeX https://miktex.org/download
+
+
 ## 2. TODO list
 
 1. 排版問題 
