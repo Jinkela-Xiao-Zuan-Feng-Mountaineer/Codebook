@@ -9,4 +9,4 @@ python:
   - "3.8"
 
 script:
-  - python GenCodebookList.py
+  - python build.py
