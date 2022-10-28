@@ -1,5 +1,5 @@
-	\subsubsection{文件操作}
-	\begin{lstlisting}[language=java]
+\subsubsection{文件操作}
+\begin{lstlisting}[language=java]
 import java.io.*;
 import java.util.*;
 import java.math.*;
@@ -22,10 +22,10 @@ public class Main{
 		sc.close();//关闭流并释放
 	}
 }
-	\end{lstlisting}
-	
-	\subsubsection{优先队列}
-	\begin{lstlisting}[language=java]
+\end{lstlisting}
+
+\subsubsection{优先队列}
+\begin{lstlisting}[language=java]
 PriorityQueue queue = new PriorityQueue( 1, new Comparator(){
 	public int compare( Point a, Point b ){
 	if( a.x < b.x || a.x == b.x && a.y < b.y )
@@ -35,10 +35,10 @@ PriorityQueue queue = new PriorityQueue( 1, new Comparator(){
 	else return 1;
 	}
 });
-	\end{lstlisting}
-	
-	\subsubsection{Map}
-	\begin{lstlisting}[language=java]
+\end{lstlisting}
+
+\subsubsection{Map}
+\begin{lstlisting}[language=java]
 Map map = new HashMap();
 map.put("sa","dd");
 String str = map.get("sa").toString;
@@ -46,10 +46,10 @@ String str = map.get("sa").toString;
 for(Object obj : map.keySet()){
 	Object value = map.get(obj );
 }
-	\end{lstlisting}
-	
-	\subsubsection{sort}
-	\begin{lstlisting}[language=java]
+\end{lstlisting}
+
+\subsubsection{sort}
+\begin{lstlisting}[language=java]
 static class cmp implements Comparator{
 	public int compare(Object o1,Object o2){
 	BigInteger b1=(BigInteger)o1;
@@ -66,4 +66,4 @@ public static void main(String[] args) throws IOException{
 	seg[i]=cin.nextBigInteger();
 	Arrays.sort(seg,new cmp());
 }
-	\end{lstlisting}
+\end{lstlisting}

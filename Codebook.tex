@@ -1,120 +1,33 @@
 \documentclass[a4paper,10pt,oneside]{article}
-\setlength{\columnsep}{15pt}    %兩欄模式的間距
-\setlength{\columnseprule}{0pt}
 
-\newcommand{\NumberOfColumn}{4} % 每頁有幾欄
-\newcommand{\UniversityName}{National Tsing Hua University} % 學校名稱
-\newcommand{\TeamName}{Angry Crow Takes Flight!} % 隊名
-
-\usepackage[landscape]{geometry}
-\usepackage{amsthm}								%定義，例題
-\usepackage{amssymb}
-\usepackage{fontspec}								%設定字體
-\usepackage{color}
-\usepackage[x11names]{xcolor}
-\usepackage{xeCJK}								%xeCJK
-\usepackage{listings}								%顯示code用的
-%\usepackage[Glenn]{fncychap}						%排版，頁面模板
-\usepackage{fancyhdr}								%設定頁首頁尾
-\usepackage{graphicx}								%Graphic
-\usepackage{enumerate}
-\usepackage{titlesec}
-\usepackage{amsmath}
-\usepackage{pdfpages}
-\usepackage{multicol}
-\usepackage{fancyhdr}
-%\usepackage[T1]{fontenc}
-\usepackage{amsmath, courier, listings, fancyhdr, graphicx}
-
-%\topmargin=0pt
-%\headsep=5pt
-\textheight=530pt
-%\footskip=0pt
-\voffset=-20pt
-\textwidth=800pt
-%\marginparsep=0pt
-%\marginparwidth=0pt
-%\marginparpush=0pt
-%\oddsidemargin=0pt
-%\evensidemargin=0pt
-\hoffset=-100pt
-
-%\setmainfont{Consolas}				%主要字型
-\setCJKmainfont{msjh.ttc}			%中文字型
-%\setmainfont{Linux Libertine G}
-\setmonofont{consola.ttf}
-%\setmainfont{sourcecodepro}
-\XeTeXlinebreaklocale "zh"						%中文自動換行
-\XeTeXlinebreakskip = 0pt plus 1pt				%設定段落之間的距離
-\setcounter{secnumdepth}{3}						%目錄顯示第三層
-
-\makeatletter
-\lst@CCPutMacro\lst@ProcessOther {"2D}{\lst@ttfamily{-{}}{-{}}}
-\@empty\z@\@empty
-\makeatother
-\lstset{											% Code顯示
-basicstyle=\scriptsize\ttfamily, 						% the size of the fonts that are used for the code
-numbers=left,										% where to put the line-numbers
-numberstyle=\tiny,						% the size of the fonts that are used for the line-numbers
-stepnumber=1,										% the step between two line-numbers. If it's 1, each line  will be numbered
-numbersep=5pt,										% how far the line-numbers are from the code
-backgroundcolor=\color{white},					% choose the background color. You must add \usepackage{color}
-showspaces=false,									% show spaces adding particular underscores
-showstringspaces=false,							% underline spaces within strings
-showtabs=false,									% show tabs within strings adding particular underscores
-frame=false,											% adds a frame around the code
-tabsize=2,											% sets default tabsize to 2 spaces
-captionpos=b,										% sets the caption-position to bottom
-breaklines=true,									% sets automatic line breaking
-breakatwhitespace=false,							% sets if automatic breaks should only happen at whitespace
-escapeinside={\%*}{*)},							% if you want to add a comment within your code
-morekeywords={*},									% if you want to add more keywords to the set
-keywordstyle=\bfseries\color{Blue1},
-commentstyle=\itshape\color{Red4},
-stringstyle=\itshape\color{Green4},
-}
-
-
-\newcommand{\includecpp}[2]{
-  \subsection{#1}
-    \lstinputlisting[language=C++]{#2}
-}
-
-\newcommand{\includepy}[2]{
-  \subsection{#1}
-    \lstinputlisting[language=python]{#2}
-}
-
-\newcommand{\includetex}[2]{
-  \subsection{#1}
-    \input{#2}
-}
-
+% **************************************************
+% Setup YOUR Codebook document in this file !
+% **************************************************
+\input{Codebook-setup}
 
 \begin{document}
   \begin{multicols}{\NumberOfColumn}
-  \pagestyle{fancy}
-  
-  \fancyfoot{}
-  \fancyhead[L]{\UniversityName{} - \TeamName}
-  \fancyhead[R]{\thepage}
-  
-  \renewcommand{\headrulewidth}{0.4pt}
-  \renewcommand{\contentsname}{Contents}
+    \pagestyle{fancy}
 
-   
-  \scriptsize
-  \input{list.tex}
-  \clearpage
+    \fancyfoot{}
+    \fancyhead[L]{\UniversityName{} - \TeamName}
+    \fancyhead[R]{\thepage}
+
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\contentsname}{Contents}
+
+    \scriptsize
+    \input{list.tex}
+    \clearpage
   \end{multicols}
   \newpage
   \begin{multicols}{\NumberOfColumn}
-  \enlargethispage*{\baselineskip}
-  \begin{center}
-    \Huge\textsc{ACM ICPC Team Reference - \TeamName}
-    \vspace{0.35cm}    
-  \end{center}
-  \tableofcontents
+    \enlargethispage*{\baselineskip}
+    \begin{center}
+      \Huge\textsc{ACM ICPC Team Reference - \TeamName}
+      \vspace{0.35cm}
+    \end{center}
+    \tableofcontents
   \end{multicols}
   \clearpage
 \end{document}
