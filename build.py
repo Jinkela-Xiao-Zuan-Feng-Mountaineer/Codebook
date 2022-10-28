@@ -1,5 +1,5 @@
 import sys
-from os import walk
+from os import walk, system
 from os.path import join, splitext
 
 sys.stdin.reconfigure(encoding='utf-8')
@@ -62,3 +62,7 @@ if __name__ == '__main__':
     print("[2] Prepare Codes...")
     with open('list.tex', 'w', encoding="utf-8") as fout:
         texCodeGen(fout, FileDict)
+
+    command = "xelatex -synctex=1 -interaction=nonstopmode --extra-mem-bot=10000000 Codebook.tex"
+    system(command)
+    system(command)

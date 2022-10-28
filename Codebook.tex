@@ -2,6 +2,10 @@
 \setlength{\columnsep}{15pt}    %兩欄模式的間距
 \setlength{\columnseprule}{0pt}
 
+\newcommand{\NumberOfColumn}{4} % 每頁有幾欄
+\newcommand{\UniversityName}{National Tsing Hua University} % 學校名稱
+\newcommand{\TeamName}{Angry Crow Takes Flight!} % 隊名
+
 \usepackage[landscape]{geometry}
 \usepackage{amsthm}								%定義，例題
 \usepackage{amssymb}
@@ -84,11 +88,11 @@ stringstyle=\itshape\color{Green4},
 
 
 \begin{document}
-  \begin{multicols}{4}
+  \begin{multicols}{\NumberOfColumn}
   \pagestyle{fancy}
   
   \fancyfoot{}
-  \fancyhead[L]{National Tsing Hua University - Angry Crow Takes Flight!}
+  \fancyhead[L]{\UniversityName{} - \TeamName}
   \fancyhead[R]{\thepage}
   
   \renewcommand{\headrulewidth}{0.4pt}
@@ -100,10 +104,10 @@ stringstyle=\itshape\color{Green4},
   \clearpage
   \end{multicols}
   \newpage
-  \begin{multicols}{4}
+  \begin{multicols}{\NumberOfColumn}
   \enlargethispage*{\baselineskip}
   \begin{center}
-    \Huge\textsc{ACM ICPC Team Reference - Angry Crow Takes Flight!}
+    \Huge\textsc{ACM ICPC Team Reference - \TeamName}
     \vspace{0.35cm}    
   \end{center}
   \tableofcontents

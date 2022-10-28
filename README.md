@@ -11,8 +11,7 @@ $ git clone https://github.com/Jinkela-Xiao-Zuan-Feng-Mountaineer/Codebook.git
 **Step 2:** Go to the project root and build by
 ~~~
 $ cd Codebook
-$ python GenCodebookList.py
-$ xelatex Codebook.tex && xelatex Codebook.tex
+$ python build.py
 ~~~
 
 ### 1.1. Dependencies
