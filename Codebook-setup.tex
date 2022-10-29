@@ -14,6 +14,7 @@
 %\usepackage[Glenn]{fncychap} % 排版，頁面模板
 \usepackage{fancyhdr} % 設定頁首頁尾
 \usepackage{graphicx} % Graphic
+\usepackage{ifthen}
 \usepackage{enumerate}
 \usepackage{titlesec}
 \usepackage{pdfpages}
@@ -22,6 +23,8 @@
 % **************************************************
 % Information and Commands for Reuse
 % **************************************************
+\newboolean{UsingGeometryLandscape}
+\setboolean{UsingGeometryLandscape}{true} % 是否使用橫版頁面
 \newcommand{\NumberOfColumn}{4} % 每頁有幾欄
 \newcommand{\UniversityName}{National Tsing Hua University} % 學校名稱
 \newcommand{\TeamName}{Angry Crow Takes Flight!} % 隊名
@@ -47,8 +50,8 @@
 % **************************************************
 % Load and Configure
 % **************************************************
+\ifthenelse{\boolean{UsingGeometryLandscape}}{\geometry{landscape}}{}
 \geometry{
-  landscape, % 使用橫版頁面
   left=30pt,
   top=50pt,
 }
@@ -68,7 +71,7 @@
 %\setmainfont{Consolas}
 %\setmainfont{Linux Libertine G}
 %\setmainfont{sourcecodepro}
-\setromanfont{Times New Roman}
+\setromanfont{Times New Roman} % 為了顯示國際歌
 \setmonofont[Path=fonts/]{consola.ttf} % 等寬字型
 \setCJKmainfont[Path=fonts/]{msjh.ttc} % 中文字型
 \setCJKmonofont[Path=fonts/]{msjh.ttc} % 中文等寬字型
