@@ -71,8 +71,13 @@
 %\setmainfont{Consolas}
 %\setmainfont{Linux Libertine G}
 %\setmainfont{sourcecodepro}
-\setromanfont{Times New Roman} % 為了顯示國際歌
-\setmonofont[Path=fonts/]{consola.ttf} % 等寬字型
+\setromanfont[Path=fonts/]{times new roman.ttf}[ % 為了顯示國際歌
+  BoldFont = times new roman bold.ttf,
+]
+\setmonofont[Path=fonts/]{consola.ttf}[ % 等寬字型
+  BoldFont = consolab.ttf,
+  ItalicFont = consolai.ttf,
+]
 \setCJKmainfont[Path=fonts/]{msjh.ttc} % 中文字型
 \setCJKmonofont[Path=fonts/]{msjh.ttc} % 中文等寬字型
 \XeTeXlinebreaklocale "zh" % 中文自動換行

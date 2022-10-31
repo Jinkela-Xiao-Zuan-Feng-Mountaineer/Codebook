@@ -1,8 +1,5 @@
 \documentclass[a4paper,10pt,oneside]{article}
 
-% **************************************************
-% Setup YOUR Codebook document in this file !
-% **************************************************
 \input{Codebook-setup}
 
 \begin{document}
@@ -41,4 +38,15 @@
     \tableofcontents
   \end{multicols}
   \clearpage
+
+  % 以下是測機用範本，不需要可以刪掉
+  \begin{multicols}{\NumberOfColumn}
+    \begin{center}
+      \Huge\textsc{ACM ICPC Judge Test - \TeamName}
+      \vspace{0.35cm}
+    \end{center}
+    \scriptsize
+    \input{./judge-test/cpp-test.tex}
+  \end{multicols}
+
 \end{document}
