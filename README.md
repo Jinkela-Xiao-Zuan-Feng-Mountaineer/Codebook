@@ -26,6 +26,11 @@ $ python build.py
 apt install texlive-xetex
 ```
 
+If still cannot build:
+```bash
+apt install texlive-full
+```
+
 ##### For Windows
 Install MiKTeX https://miktex.org/download
 
