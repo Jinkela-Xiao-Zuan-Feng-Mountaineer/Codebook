@@ -37,6 +37,16 @@
     \end{center}
     \tableofcontents
   \end{multicols}
+
+  \fancypagestyle{plain}{%
+    \fancyfoot{}
+    \fancyhead[L]{\UniversityName{} \TeamName{}}
+    \fancyhead[R]{\thepage}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\contentsname}{Contents}
+  }
+  \pagestyle{plain}
+
   \clearpage
 
   % 以下是測機用範本，不需要可以刪掉
