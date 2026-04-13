@@ -39,18 +39,20 @@ struct DINIC{
 		return 0;
 	}
 	T dfs(int u,int t,T CF=INF){
-		if(u==t)return CF;
-		T df;
+		if(u==t||!CF)return CF;
+		T df,tf=0;
 		for(int &i=cur[u];~i;i=e[i].pre){
 			if(LV[e[i].v]==LV[u]+1&&e[i].r){
 				if(df=dfs(e[i].v,t,min(CF,e[i].r))){
 					e[i].r-=df;
 					e[i^1].r+=df;
-					return df;
+					tf+=df;
+					if(!(CF-=df))break;
 				}
 			}
 		}
-		return LV[u]=0;
+		if(!tf)LV[u]=0;
+		return tf;
 	}
 	T dinic(int s,int t,bool clean=true){
 		if(clean)for(size_t i=0;i<e.size();++i)
